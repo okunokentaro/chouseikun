@@ -13,10 +13,8 @@ export class EntranceComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit() {
-    this.auth.statusHasChanged.subscribe(() => {
-      if (this.auth.statusIsLoggedIn()) {
-        this.router.navigate(['main'])
-      }
+    this.auth.whenLoggedIn.subscribe(() => {
+      this.router.navigate(['main'])
     })
   }
 }

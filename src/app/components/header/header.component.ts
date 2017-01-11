@@ -13,10 +13,8 @@ export class HeaderComponent implements OnInit {
               private router: Router) {}
 
   ngOnInit() {
-    this.auth.statusHasChanged.subscribe(() => {
-      if (this.auth.statusIsNotLoggedIn()) {
-        this.router.navigate([''])
-      }
+    this.auth.whenLoggedOut.subscribe(() => {
+      this.router.navigate([''])
     })
   }
 }

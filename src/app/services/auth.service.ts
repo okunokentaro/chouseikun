@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core'
 import {AngularFire} from 'angularfire2'
-import {BehaviorSubject} from 'rxjs'
+import {Subject} from 'rxjs'
 
 export enum LoginStatus {
   LoggedIn,
@@ -10,7 +10,8 @@ export enum LoginStatus {
 
 @Injectable()
 export class AuthService {
-  statusHasChanged = new BehaviorSubject<LoginStatus>(LoginStatus.Unknown)
+  whenLoggedIn = new Subject<any>()
+  whenLoggedOut = new Subject<any>()
   private loginStatus: LoginStatus
 
   constructor(private af: AngularFire) {
@@ -18,7 +19,12 @@ export class AuthService {
       this.loginStatus = !!auth
         ? LoginStatus.LoggedIn
         : LoginStatus.NotLoggedIn
-      this.statusHasChanged.next(this.loginStatus)
+
+      if (this.statusIsLoggedIn()) {
+        this.whenLoggedIn.next(null)
+      } else if (this.statusIsNotLoggedIn()) {
+        this.whenLoggedOut.next(null)
+      }
     })
   }
 
