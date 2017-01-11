@@ -1,7 +1,7 @@
 import {Routes, RouterModule} from '@angular/router'
 
 import {EntranceComponent} from './components/entrance/entrance.component'
-import {HeaderComponent} from './components/header/header.component'
+import {MainComponent} from './components/main/main.component'
 
 const appRoutes: Routes = [
   {
@@ -10,7 +10,7 @@ const appRoutes: Routes = [
   },
   {
     path     : 'main',
-    component: HeaderComponent
+    component: MainComponent
   },
   {
     path     : '**',

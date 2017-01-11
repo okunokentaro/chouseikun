@@ -12,14 +12,16 @@ import {EntranceComponent} from './components/entrance/entrance.component'
 import {AuthButtonComponent} from './components/auth-button/auth-button.component'
 
 import {AuthService} from './services/auth.service'
-import {ROUTING} from './app.routing'
+import {ROUTING} from './app.routing';
+import { MainComponent } from './components/main/main.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     EntranceComponent,
-    AuthButtonComponent
+    AuthButtonComponent,
+    MainComponent
   ],
   imports: [
     ConfiguredAngularFireModule,
