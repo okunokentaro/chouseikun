@@ -38,3 +38,9 @@ testem.log
 #System Files
 .DS_Store
 Thumbs.db
+
+# Semantic UI
+/semantic
+/src/semantic.css
+/src/semantic.js
+/src/themes

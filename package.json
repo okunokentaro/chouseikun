@@ -13,6 +13,7 @@
     "@angular/router": "^3.3.1",
     "core-js": "^2.4.1",
     "rxjs": "^5.0.1",
+    "semantic-ui": "^2.2.7",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"
   },
@@ -37,7 +38,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "buildSemantic": "cd ./semantic && gulp build && ln -s ../semantic/dist/semantic.css ./src/semantic.css && ln -s ../semantic/dist/themes ./src/themes && ln -s ../semantic/dist/semantic.js ./src/semantic.js",
+    "buildSemantic": "cd ./semantic && gulp build",
+    "linkSemantic": " ln -s ../semantic/dist/semantic.css ./src/semantic.css && ln -s ../semantic/dist/themes ./src/themes && ln -s ../semantic/dist/semantic.js ./src/semantic.js",
     "e2e": "protractor",
     "installSemantic": "cd ./node_modules/semantic-ui && npm run install",
     "lint": "tslint \"src/**/*.ts\"",
