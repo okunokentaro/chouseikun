@@ -1,0 +1,10 @@
+:host {
+  display: block;
+  padding-top: 14px;
+  background: #34A21A;
+}
+
+h1 {
+  color: white;
+  font-weight: 500;
+}
