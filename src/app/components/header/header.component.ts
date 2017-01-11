@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core'
-import {AngularFire} from 'angularfire2'
-import {AuthService} from "../../services/auth.service";
+
+import {AuthService} from '../../services/auth.service'
 
 @Component({
   selector: 'ch-header',

@@ -1,5 +1,5 @@
-import {AngularFireModule, FirebaseAppConfig, AuthMethods, AuthProviders} from 'angularfire2';
-import {NgModule} from '@angular/core';
+import {AngularFireModule, FirebaseAppConfig, AuthMethods, AuthProviders} from 'angularfire2'
+import {NgModule} from '@angular/core'
 
 export const FIREBASE_CONFIG = {
   apiKey           : 'AIzaSyB4r-1COyvDxQIWWAocrqCp2OrMCOLleGc',
