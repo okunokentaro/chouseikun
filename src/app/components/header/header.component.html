@@ -1,6 +1,11 @@
 <div class="ui container">
-  <h1>調整くん</h1>
-  <div>{{(af.auth | async)?.auth.displayName}}</div>
-  <button (click)="login()">login</button>
-  <button (click)="logout()">logout</button>
+  <ui-grid>
+    <ui-column [n]="12">
+      <h1>調整くん</h1>
+    </ui-column>
+    <ui-column [n]="4">
+      <ui-button *ngIf=" isLoggedIn" (click)="logout()">ログアウト</ui-button>
+      <ui-button *ngIf="!isLoggedIn" (click)="login()" >ログイン</ui-button>
+    </ui-column>
+  </ui-grid>
 </div>

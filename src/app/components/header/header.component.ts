@@ -7,14 +7,18 @@ import {AngularFire} from 'angularfire2'
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  isLoggedIn: boolean
+
   constructor(public af: AngularFire) {}
 
   ngOnInit() {
     this.af.auth.subscribe((auth) => {
       if (auth && auth.uid) {
         console.log(1)
+        this.isLoggedIn = true
       } else {
         console.log(0)
+        this.isLoggedIn = false
       }
     })
   }

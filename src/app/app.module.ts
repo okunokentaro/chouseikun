@@ -4,6 +4,7 @@ import {FormsModule} from '@angular/forms'
 import {HttpModule} from '@angular/http'
 import {AngularFireModule} from "angularfire2";
 
+import {NgSemanticModule} from '../ng-semantic/ng-semantic.module'
 import {ConfiguredAngularFireModule} from "./firebase-config"
 import {AppComponent} from './app.component'
 import {HeaderComponent} from './components/header/header.component'
@@ -15,6 +16,7 @@ import {HeaderComponent} from './components/header/header.component'
   ],
   imports: [
     ConfiguredAngularFireModule,
+    NgSemanticModule,
     BrowserModule,
     FormsModule,
     HttpModule
