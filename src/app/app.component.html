@@ -1,3 +1,2 @@
-<h1>
-  {{title}}
-</h1>
+<div>{{(af.auth | async)?.auth.displayName}}</div>
+<button (click)="login()">Login With Twitter</button>
