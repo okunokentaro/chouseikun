@@ -1,17 +1,7 @@
 {
   "name": "chouseikun",
   "version": "0.0.0",
-  "license": "MIT",
   "angular-cli": {},
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "lint": "tslint \"src/**/*.ts\"",
-    "test": "ng test",
-    "pree2e": "webdriver-manager update --standalone false --gecko false",
-    "e2e": "protractor"
-  },
-  "private": true,
   "dependencies": {
     "@angular/common": "^2.3.1",
     "@angular/compiler": "^2.3.1",
@@ -43,5 +33,17 @@
     "ts-node": "1.2.1",
     "tslint": "^4.0.2",
     "typescript": "~2.0.3"
+  },
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "buildSemantic": "cd ./semantic && gulp build && ln -s ../semantic/dist/semantic.css ./src/semantic.css && ln -s ../semantic/dist/themes ./src/themes && ln -s ../semantic/dist/semantic.js ./src/semantic.js",
+    "e2e": "protractor",
+    "installSemantic": "cd ./node_modules/semantic-ui && npm run install",
+    "lint": "tslint \"src/**/*.ts\"",
+    "ng": "ng",
+    "pree2e": "webdriver-manager update --standalone false --gecko false",
+    "start": "ng serve",
+    "test": "ng test"
   }
 }
