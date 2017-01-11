@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core'
 
-import {AuthService} from '../../services/auth.service'
+import {AuthService, LoginStatus} from '../../services/auth.service'
 
 @Component({
   selector: 'ch-header',
@@ -8,12 +8,12 @@ import {AuthService} from '../../services/auth.service'
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isLoggedIn: boolean
+  loginStatus: LoginStatus
 
   constructor(private auth: AuthService) {}
 
   ngOnInit() {
-    this.auth.statusHasChanged.subscribe((v) => {this.isLoggedIn = v})
+    this.auth.statusHasChanged.subscribe((v) => this.loginStatus = v)
   }
 
   login() {
@@ -22,5 +22,17 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.auth.logout()
+  }
+
+  statusIsLoggedIn(): boolean {
+    return this.loginStatus === LoginStatus.LoggedIn
+  }
+
+  statusIsNotLoggedIn(): boolean {
+    return this.loginStatus === LoginStatus.NotLoggedIn
+  }
+
+  statusIsUnknown(): boolean {
+    return this.loginStatus === LoginStatus.Unknown
   }
 }

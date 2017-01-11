@@ -1,16 +1,24 @@
 import {Injectable} from '@angular/core'
 import {AngularFire} from 'angularfire2'
-import {Subject} from 'rxjs'
+import {BehaviorSubject} from 'rxjs'
+
+export enum LoginStatus {
+  LoggedIn,
+  NotLoggedIn,
+  Unknown
+}
 
 @Injectable()
 export class AuthService {
-  statusHasChanged = new Subject<boolean>()
-  private isLoggedIn: boolean
+  statusHasChanged = new BehaviorSubject<LoginStatus>(LoginStatus.Unknown)
+  private loginStatus: LoginStatus
 
   constructor(private af: AngularFire) {
     this.af.auth.subscribe((auth) => {
-      this.isLoggedIn = !!auth
-      this.statusHasChanged.next(this.isLoggedIn)
+      this.loginStatus = !!auth
+        ? LoginStatus.LoggedIn
+        : LoginStatus.NotLoggedIn
+      this.statusHasChanged.next(this.loginStatus)
     })
   }
 
