@@ -2,12 +2,10 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing'
 import {By} from '@angular/platform-browser'
 import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core'
+import {RouterTestingModule} from '@angular/router/testing'
 
 import {MainComponent} from './main.component'
-import {HeaderComponent} from '../header/header.component'
-import {AuthService} from '../../services/auth.service'
-import {MockAuthService} from '../../mocks/services/mock-auth.service'
-import {RouterTestingModule} from "@angular/router/testing";
+import {AppTestingModule} from '../../mocks/app-testing.module'
 
 describe('MainComponent', () => {
   let component: MainComponent
@@ -16,14 +14,8 @@ describe('MainComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        AppTestingModule,
         RouterTestingModule
-      ],
-      declarations: [
-        MainComponent,
-        HeaderComponent,
-      ],
-      providers: [
-        {provide: AuthService, useClass: MockAuthService}
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

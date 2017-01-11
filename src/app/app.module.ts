@@ -10,10 +10,10 @@ import {AppComponent} from './app.component'
 import {HeaderComponent} from './components/header/header.component'
 import {EntranceComponent} from './components/entrance/entrance.component'
 import {AuthButtonComponent} from './components/auth-button/auth-button.component'
+import {MainComponent} from './components/main/main.component'
 
 import {AuthService} from './services/auth.service'
-import {ROUTING} from './app.routing';
-import { MainComponent } from './components/main/main.component'
+import {ROUTING} from './app.routing'
 
 @NgModule({
   declarations: [
