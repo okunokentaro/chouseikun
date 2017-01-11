@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core'
+import {Router} from '@angular/router'
 
 import {AuthService, LoginStatus} from '../../services/auth.service'
 
@@ -10,10 +11,16 @@ import {AuthService, LoginStatus} from '../../services/auth.service'
 export class HeaderComponent implements OnInit {
   loginStatus: LoginStatus
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService,
+              private router: Router) {}
 
   ngOnInit() {
-    this.auth.statusHasChanged.subscribe((v) => this.loginStatus = v)
+    this.auth.statusHasChanged.subscribe((v) => {
+      this.loginStatus = v
+      if (this.statusIsNotLoggedIn()) {
+        this.router.navigate([''])
+      }
+    })
   }
 
   login() {

@@ -1,7 +1,7 @@
 :host {
   display: block;
   padding-top: 14px;
-  background: #34A21A;
+  background: var(--app-primary-color);
 }
 
 h1 {
