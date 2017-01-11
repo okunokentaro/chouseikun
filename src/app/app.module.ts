@@ -5,22 +5,27 @@ import {HttpModule} from '@angular/http'
 
 import {NgSemanticModule} from '../ng-semantic/ng-semantic.module'
 import {ConfiguredAngularFireModule} from './firebase-config'
+
 import {AppComponent} from './app.component'
 import {HeaderComponent} from './components/header/header.component'
+import {EntranceComponent} from './components/entrance/entrance.component'
 
 import {AuthService} from './services/auth.service'
+import {ROUTING} from './app.routing'
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    EntranceComponent
   ],
   imports: [
     ConfiguredAngularFireModule,
     NgSemanticModule,
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ROUTING,
   ],
   providers: [
     AuthService,

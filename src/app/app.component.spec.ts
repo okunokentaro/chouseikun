@@ -3,6 +3,7 @@ import {async, ComponentFixture, TestBed} from '@angular/core/testing'
 import {By} from '@angular/platform-browser'
 import {DebugElement, Component} from '@angular/core'
 import {AngularFire} from 'angularfire2'
+import {RouterTestingModule} from '@angular/router/testing'
 
 import {AppComponent} from './app.component'
 import {MockAngularFire} from './mocks/vendor/mock-angular-fire'
@@ -19,6 +20,9 @@ describe('AppComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule
+      ],
       declarations: [
         AppComponent,
         MockHeaderComponent
