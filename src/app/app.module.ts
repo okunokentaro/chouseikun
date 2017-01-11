@@ -9,6 +9,8 @@ import {ConfiguredAngularFireModule} from "./firebase-config"
 import {AppComponent} from './app.component'
 import {HeaderComponent} from './components/header/header.component'
 
+import {AuthService} from './services/auth.service'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +23,9 @@ import {HeaderComponent} from './components/header/header.component'
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
