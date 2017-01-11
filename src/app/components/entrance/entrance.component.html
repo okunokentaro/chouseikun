@@ -1,2 +1,8 @@
-<h1>調整くん</h1>
-<ui-button *ngIf="statusIsNotLoggedIn()" (click)="login()" >ログイン</ui-button>
+<ui-container>
+  <ui-grid>
+    <ui-column [n]="16" class="center aligned">
+      <h1>調整くん</h1>
+      <ch-auth-button></ch-auth-button>
+    </ui-column>
+  </ui-grid>
+</ui-container>

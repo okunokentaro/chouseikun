@@ -5,8 +5,7 @@
     </ui-column>
 
     <ui-column [n]="4" class="right aligned">
-      <ui-button *ngIf="statusIsLoggedIn()" (click)="logout()">ログアウト</ui-button>
-      <ui-button *ngIf="statusIsNotLoggedIn()" (click)="login()" >ログイン</ui-button>
+      <ch-auth-button></ch-auth-button>
     </ui-column>
   </ui-grid>
 </ui-container>

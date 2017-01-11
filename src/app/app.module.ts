@@ -9,6 +9,7 @@ import {ConfiguredAngularFireModule} from './firebase-config'
 import {AppComponent} from './app.component'
 import {HeaderComponent} from './components/header/header.component'
 import {EntranceComponent} from './components/entrance/entrance.component'
+import {AuthButtonComponent} from './components/auth-button/auth-button.component'
 
 import {AuthService} from './services/auth.service'
 import {ROUTING} from './app.routing'
@@ -17,7 +18,8 @@ import {ROUTING} from './app.routing'
   declarations: [
     AppComponent,
     HeaderComponent,
-    EntranceComponent
+    EntranceComponent,
+    AuthButtonComponent
   ],
   imports: [
     ConfiguredAngularFireModule,

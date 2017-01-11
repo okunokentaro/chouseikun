@@ -1,18 +1,13 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing'
 import {By} from '@angular/platform-browser'
-import {DebugElement, Component} from '@angular/core'
+import {DebugElement, Component, NO_ERRORS_SCHEMA} from '@angular/core'
 import {AngularFire} from 'angularfire2'
 import {RouterTestingModule} from '@angular/router/testing'
 
 import {AppComponent} from './app.component'
 import {MockAngularFire} from './mocks/vendor/mock-angular-fire'
-
-@Component({
-  selector: 'ch-header',
-  template: ''
-})
-class MockHeaderComponent {}
+import {HeaderComponent} from './components/header/header.component'
 
 describe('AppComponent', () => {
   let component: AppComponent
@@ -25,11 +20,12 @@ describe('AppComponent', () => {
       ],
       declarations: [
         AppComponent,
-        MockHeaderComponent
+        HeaderComponent
       ],
       providers: [
         {provide: AngularFire, useClass: MockAngularFire}
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
       .compileComponents()
   }))

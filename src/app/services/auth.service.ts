@@ -29,4 +29,16 @@ export class AuthService {
   logout() {
     this.af.auth.logout()
   }
+
+  statusIsLoggedIn(): boolean {
+    return this.loginStatus === LoginStatus.LoggedIn
+  }
+
+  statusIsNotLoggedIn(): boolean {
+    return this.loginStatus === LoginStatus.NotLoggedIn
+  }
+
+  statusIsUnknown(): boolean {
+    return this.loginStatus === LoginStatus.Unknown
+  }
 }
