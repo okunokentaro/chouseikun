@@ -15,7 +15,7 @@
       "main": "main.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
-      "prefix": "app",
+      "prefix": "ch",
       "mobile": false,
       "styles": [
         "styles.css"
@@ -48,7 +48,7 @@
       "template": false
     },
     "spec": {
-      "class": false,
+      "class": true,
       "component": true,
       "directive": true,
       "module": false,
