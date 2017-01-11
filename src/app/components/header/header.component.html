@@ -1,0 +1,6 @@
+<div class="ui container">
+  <h1>調整くん</h1>
+  <div>{{(af.auth | async)?.auth.displayName}}</div>
+  <button (click)="login()">login</button>
+  <button (click)="logout()">logout</button>
+</div>
