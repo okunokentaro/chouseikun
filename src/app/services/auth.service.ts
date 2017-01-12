@@ -9,7 +9,7 @@ export enum LoginStatus {
   Unknown
 }
 
-type Personal = {
+type User = {
   uid: string
   name: string
   photoURL: string
@@ -21,14 +21,12 @@ export class AuthService {
   whenLoggedIn = new Subject<any>()
   whenLoggedOut = new Subject<any>()
 
-  displayName: string
-  uid: string
-  photoURL: string
+  personal: User
 
   private loginStatus: LoginStatus
 
   constructor(private af: AngularFire) {
-    const personal$ = new Subject<Personal>()
+    const personal$ = new Subject<User>()
     const uids$ = new Subject<string[]>()
 
     this.af.auth.subscribe((res) => {
@@ -39,17 +37,14 @@ export class AuthService {
       if (this.statusIsLoggedIn()) {
         this.whenLoggedIn.next(null)
 
-        console.log(res.twitter)
-        this.displayName = res.auth.displayName
-        this.uid         = res.uid
-        this.photoURL    = res.auth.photoURL
-
-        personal$.next({
-          uid      : this.uid,
-          name     : this.displayName,
-          photoURL : this.photoURL,
+        this.personal = {
+          name     : res.auth.displayName,
+          uid      : res.uid,
+          photoURL : res.auth.photoURL,
           twitterId: res.twitter.uid
-        })
+        }
+
+        personal$.next(this.personal)
 
       } else if (this.statusIsNotLoggedIn()) {
         this.whenLoggedOut.next(null)

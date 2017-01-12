@@ -5,7 +5,7 @@
     </ui-column>
 
     <ui-column [n]="4" class="right aligned">
-      <img class="ui avatar image ch-avatar" [attr.src]="auth.photoURL" [attr.alt]="auth.displayName">
+      <img class="ui avatar image ch-avatar" [attr.src]="auth.personal.photoURL" [attr.alt]="auth.personal.name">
       <ch-auth-button></ch-auth-button>
     </ui-column>
   </ui-grid>
