@@ -1,11 +1,15 @@
+import * as firebase from 'firebase'
 import {Component, OnInit} from '@angular/core'
 import {AngularFire} from 'angularfire2'
+import {Subject} from 'rxjs'
 
 import {
   UsersRepositoryService,
   User
 } from '../../application/user/users-repository.service'
-import {Subject} from "rxjs";
+import {uuidGen} from '../../utils/uuid-gen'
+
+type ScreenState = 'Main' | 'NewEvent'
 
 @Component({
   selector: 'ch-main',
@@ -15,6 +19,8 @@ import {Subject} from "rxjs";
 export class MainComponent implements OnInit {
   my: User
   events: any[]
+  screenState: ScreenState
+  eventName: string
 
   constructor(private af: AngularFire,
               private users: UsersRepositoryService) {
@@ -36,5 +42,32 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.screenState = 'Main'
+  }
+
+  onClickNewEvent() {
+    this.screenState = 'NewEvent'
+  }
+
+  onSubmit() {
+    this.screenState = 'Main'
+
+    if (this.my) {
+      const uuid = uuidGen()
+      this.af.database.object(`/events/${uuid}`).set({
+        name    : this.eventName,
+        group   : this.my.groups[0],
+        creator : this.my.uid,
+        version : 1,
+        created : firebase.database.ServerValue.TIMESTAMP,
+        modified: firebase.database.ServerValue.TIMESTAMP
+      }).then(() => {
+        this.eventName = ''
+      })
+    }
+  }
+
+  onClickCancelNewEvent() {
+    this.screenState = 'Main'
   }
 }

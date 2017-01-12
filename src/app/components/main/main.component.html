@@ -1,14 +1,29 @@
 <ch-header></ch-header>
 
-<ui-container>
+<ui-container *ngIf="!screenState || screenState === 'Main'">
   <ui-grid>
     <ui-column [n]="16">
-      <ui-button>新規イベント</ui-button>
+      <ui-button (click)="onClickNewEvent()">新規イベント</ui-button>
     </ui-column>
     <ui-column [n]="16">
       <div *ngFor="let event of events">
         {{event.name}}
       </div>
+    </ui-column>
+  </ui-grid>
+</ui-container>
+
+<ui-container *ngIf="screenState === 'NewEvent'">
+  <ui-grid>
+    <ui-column [n]="16">
+      <form class="ui form" (ngSubmit)="onSubmit()">
+        <div class="field">
+          <label for="eventName">イベント名</label>
+          <input type="text" id="eventName" name="eventName" placeholder="イベント名" required [(ngModel)]="eventName">
+        </div>
+        <ui-button (click)="onClickCancelNewEvent()">キャンセル</ui-button>
+        <ui-button [type]="'submit'" [primary]="true">追加</ui-button>
+      </form>
     </ui-column>
   </ui-grid>
 </ui-container>
