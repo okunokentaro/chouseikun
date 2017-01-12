@@ -1,6 +1,6 @@
 :host {
   display: block;
-  padding-top: 14px;
+  margin-top: 14px;
   background: var(--app-primary-color);
 }
 

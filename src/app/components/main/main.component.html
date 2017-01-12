@@ -1,1 +1,14 @@
 <ch-header></ch-header>
+
+<ui-container>
+  <ui-grid>
+    <ui-column [n]="16">
+      <ui-button>新規イベント</ui-button>
+    </ui-column>
+    <ui-column [n]="16">
+      <div *ngFor="let event of events">
+        {{event.name}}
+      </div>
+    </ui-column>
+  </ui-grid>
+</ui-container>
