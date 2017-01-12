@@ -2,20 +2,7 @@ import * as firebase from 'firebase'
 import {Injectable} from '@angular/core'
 import {Subject, Observable} from 'rxjs'
 import {AngularFire, FirebaseAuthState} from 'angularfire2'
-
-export type PartialUser = {
-  uid: string
-  name: string
-  photoURL: string
-  twitterId: string
-}
-
-export type User = PartialUser & {
-  groups: string[]
-  created: number
-  modified: number
-  version: number
-}
+import {User, PartialUser} from './user'
 
 const USERS_PATH = 'users'
 

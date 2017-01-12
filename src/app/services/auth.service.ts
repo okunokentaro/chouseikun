@@ -2,10 +2,8 @@ import {Injectable} from '@angular/core'
 import {AngularFire, FirebaseAuthState} from 'angularfire2'
 import {Subject, Observable} from 'rxjs'
 
-import {
-  UsersRepositoryService,
-  User
-} from '../application/user/users-repository.service'
+import {UsersRepositoryService} from '../application/user/users-repository.service'
+import {User} from '../application/user/user'
 
 export enum LoginStatus {
   LoggedIn,

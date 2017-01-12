@@ -1,3 +1,7 @@
-ui-container {
+:host {
+  display: block;
+}
+
+ch-header + * {
   margin-top: 14px;
 }
