@@ -3,7 +3,10 @@
 <ui-container *ngIf="!screenState || screenState === 'Main'">
   <ui-grid>
     <ui-column [n]="16">
-      <ui-button (click)="onClickNewEvent()">新規イベント</ui-button>
+      <ui-button
+        (uiClick)="onClickNewEvent()"
+        [disabled]="!my"
+      >新規イベント</ui-button>
     </ui-column>
     <ui-column [n]="16">
       <div *ngFor="let event of events">
@@ -21,7 +24,7 @@
           <label for="eventName">イベント名</label>
           <input type="text" id="eventName" name="eventName" placeholder="イベント名" required [(ngModel)]="eventName">
         </div>
-        <ui-button (click)="onClickCancelNewEvent()">キャンセル</ui-button>
+        <ui-button (uiClick)="onClickCancelNewEvent()">キャンセル</ui-button>
         <ui-button [type]="'submit'" [primary]="true">追加</ui-button>
       </form>
     </ui-column>

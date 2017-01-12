@@ -1,11 +1,11 @@
 <ui-button
   *ngIf="auth.statusIsNotLoggedIn()"
   [inverted]="true"
-  (click)="login()"
+  (uiClick)="login()"
 >ログイン</ui-button>
 
 <ui-button
   *ngIf="auth.statusIsLoggedIn()"
   [inverted]="true"
-  (click)="logout()"
+  (uiClick)="logout()"
 >ログアウト</ui-button>

@@ -1,6 +1,6 @@
 import {
   Component, OnInit, ElementRef, Input, ViewChild,
-  AfterViewInit
+  AfterViewInit, Output, EventEmitter, HostListener
 } from '@angular/core'
 
 @Component({
@@ -9,7 +9,9 @@ import {
 })
 export class ButtonComponent implements OnInit, AfterViewInit {
   @ViewChild('BUTTON') buttonRef: ElementRef
+  @Output() uiClick = new EventEmitter()
   private elem: HTMLElement
+  private _disabled = false
 
   constructor(elemRef: ElementRef) {
     this.elem = elemRef.nativeElement
@@ -38,5 +40,25 @@ export class ButtonComponent implements OnInit, AfterViewInit {
     if (v) {
       this.buttonRef.nativeElement.classList.add('primary')
     }
+  }
+
+  @Input()
+  set disabled(v: boolean) {
+    this._disabled = v
+    const className = 'disabled'
+    if (v) {
+      this.buttonRef.nativeElement.classList.add(className)
+    } else {
+      this.buttonRef.nativeElement.classList.remove(className)
+    }
+  }
+
+  @HostListener('click', ['$event'])
+  onClick(ev: MouseEvent) {
+    if (this._disabled) {
+      ev.preventDefault()
+      return
+    }
+    this.uiClick.emit(ev)
   }
 }
