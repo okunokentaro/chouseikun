@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core'
-const Cal = require('cal')
+const Cal = require('cal.js')
 
 @Component({
   selector: 'ch-calendar',
@@ -11,11 +11,12 @@ export class CalendarComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const cal = new Cal({
-      year: 2014,
-      month: 12,
-      date: 4,
-      fromMonday: 1
+    const date = new Date()
+    const cal  = new Cal({
+      year      : date.getFullYear(),
+      month     : date.getMonth() + 1,
+      date      : date.getDate(),
+      fromMonday: true
     })
 
     console.log(cal.getDayArr())
