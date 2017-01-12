@@ -16,6 +16,7 @@ import {NewEventComponent} from './components/new-event/new-event.component'
 
 import {AuthService} from './services/auth.service'
 import {UsersRepositoryService} from './application/user/users-repository.service'
+import {EventsRepositoryService} from './application/event/events-repository.service'
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {UsersRepositoryService} from './application/user/users-repository.servic
   providers: [
     AuthService,
     UsersRepositoryService,
+    EventsRepositoryService,
   ],
   bootstrap: [AppComponent]
 })

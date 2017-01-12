@@ -6,10 +6,9 @@ import {Router} from '@angular/router'
 import {UsersRepositoryService} from '../../application/user/users-repository.service'
 import {User} from '../../application/user/user'
 import {AuthService} from '../../services/auth.service'
+import {EVENTS_PATH} from '../../application/event/events-repository.service'
 
 type ScreenState = 'Main' | 'NewEvent'
-
-export const EVENTS_PATH = 'events'
 
 @Component({
   selector: 'ch-main',

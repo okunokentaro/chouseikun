@@ -1,10 +1,7 @@
-import * as firebase from 'firebase'
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core'
-import {AngularFire} from 'angularfire2'
 
-import {uuidGen} from '../../utils/uuid-gen'
-import {EVENTS_PATH} from '../main/main.component'
 import {User} from '../../application/user/user'
+import {EventsRepositoryService} from '../../application/event/events-repository.service'
 
 @Component({
   selector: 'ch-new-event',
@@ -19,28 +16,21 @@ export class NewEventComponent implements OnInit {
   @Output() submit = new EventEmitter()
   @Output() cancel = new EventEmitter()
 
-  constructor(private af: AngularFire) {}
+  constructor(private events: EventsRepositoryService) {}
 
   ngOnInit() {
   }
 
   onSubmit() {
-    this.submit.emit(null)
+    if (!this.my) {
+      return
+    }
 
     const group = this.my.groups[parseInt(this.group, 10)]
-    if (this.my && group) {
-      const uuid = uuidGen()
-      this.af.database.object(`/${EVENTS_PATH}/${uuid}`).set({
-        name    : this.name,
-        group   : group,
-        creator : this.my.uid,
-        version : 1,
-        created : firebase.database.ServerValue.TIMESTAMP,
-        modified: firebase.database.ServerValue.TIMESTAMP
-      }).then(() => {
-        this.name = ''
-      })
-    }
+    this.events.add(this.my.uid, this.name, group).then(() => {
+      this.submit.emit(null)
+      this.name = ''
+    })
   }
 
   onClickCancelNewEvent() {
