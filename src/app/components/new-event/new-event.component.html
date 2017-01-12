@@ -13,6 +13,7 @@
             [(ngModel)]="name"
           >
         </div>
+
         <div class="field">
           <label for="group">グループ</label>
           <select
@@ -29,8 +30,46 @@
             >{{v}}</option>
           </select>
         </div>
+
+        <div class="field">
+          <label for="due">期限</label>
+          <input
+            id="due"
+            name="due"
+            type="date"
+            placeholder="期限"
+            useValueAsDate
+            [(ngModel)]="due"
+          >
+        </div>
+
+        <div class="fields">
+          <div class="eight wide field">
+            <label for="candidates">候補（改行区切り）</label>
+            <textarea
+              id="candidates"
+              name="candidates"
+              required
+              [(ngModel)]="rawCandidates"
+            ></textarea>
+          </div>
+          <div class="eight wide field">
+            カレンダー
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="comment">コメント（任意）</label>
+          <textarea
+            id="comment"
+            name="comment"
+            [(ngModel)]="comment"
+          ></textarea>
+        </div>
+
         <ui-button (uiClick)="onClickCancelNewEvent()">キャンセル</ui-button>
         <ui-button [type]="'submit'" [primary]="true">追加</ui-button>
+
       </form>
     </ui-column>
   </ui-grid>

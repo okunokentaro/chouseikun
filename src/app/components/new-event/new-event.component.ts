@@ -11,6 +11,9 @@ import {EventsRepositoryService} from '../../application/event/events-repository
 export class NewEventComponent implements OnInit {
   name: string
   group: string
+  due: Date
+  comment: string
+  rawCandidates: string
 
   @Input() my: User
   @Output() submit = new EventEmitter()
@@ -19,6 +22,7 @@ export class NewEventComponent implements OnInit {
   constructor(private events: EventsRepositoryService) {}
 
   ngOnInit() {
+    this.initDue()
   }
 
   onSubmit() {
@@ -26,8 +30,16 @@ export class NewEventComponent implements OnInit {
       return
     }
 
-    const group = this.my.groups[parseInt(this.group, 10)]
-    this.events.add(this.my.uid, this.name, group).then(() => {
+    const draft = {
+      creator: this.my.uid,
+      name   : this.name,
+      group  : this.my.groups[parseInt(this.group, 10)],
+      due    : this.due,
+      comment: this.comment,
+      candidates: this.rawCandidates.split('/n')
+    }
+
+    this.events.add(draft).then(() => {
       this.submit.emit(null)
       this.name = ''
     })
@@ -35,5 +47,11 @@ export class NewEventComponent implements OnInit {
 
   onClickCancelNewEvent() {
     this.cancel.emit(null)
+  }
+
+  private initDue() {
+    const date = new Date()
+    date.setDate(date.getDate() + 7) // one week later
+    this.due = date
   }
 }

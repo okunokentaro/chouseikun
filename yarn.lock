@@ -254,6 +254,10 @@ angular-cli@1.0.0-beta.24:
     yam "0.0.18"
     zone.js "^0.7.2"
 
+angular-date-value-accessor@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/angular-date-value-accessor/-/angular-date-value-accessor-0.0.1.tgz#16b0783f70f74bdf0972ac23257e8b0839e53502"
+
 angularfire2@2.0.0-beta.7.1-pre:
   version "2.0.0-beta.7.1-pre"
   resolved "https://registry.yarnpkg.com/angularfire2/-/angularfire2-2.0.0-beta.7.1-pre.tgz#23dad40f37014feade023d58739113fe99a62b6e"
@@ -818,6 +822,10 @@ bytes@2.3.0:
 bytes@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.4.0.tgz#7d97196f9d5baf7f6935e25985549edd2a6c2339"
+
+"cal@git+ssh://git@github.com/leader22/cal.git":
+  version "0.0.5"
+  resolved "git+ssh://git@github.com/leader22/cal.git#34fa694866e648eb5e593c9a0e993c57b5e94a48"
 
 callsite@1.0.0:
   version "1.0.0"

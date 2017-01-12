@@ -5,22 +5,31 @@ import {Subject} from 'rxjs'
 
 import {uuidGen} from '../../utils/uuid-gen'
 
+export interface EventDraft {
+  creator: string
+  name: string
+  group: string
+  due: Date
+  comment: string
+  candidates: string[]
+}
+
 export const EVENTS_PATH = 'events'
 
 @Injectable()
 export class EventsRepositoryService {
   constructor(private af: AngularFire) { }
 
-  add(creator: string,
-      name: string,
-      group: string): firebase.Promise<void> {
-    console.assert(!!group, 'group is should not be undefined')
+  add(draft: EventDraft): firebase.Promise<void> {
+    console.assert(!!draft && !!draft.group, 'draft.group is should not be undefined')
 
     const uuid = uuidGen()
     return this.af.database.object(`/${EVENTS_PATH}/${uuid}`).set({
-      creator,
-      name,
-      group,
+      creator : draft.creator,
+      name    : draft.name,
+      group   : draft.group,
+      due     : draft.due.getTime(),
+      comment : draft.comment,
       created : firebase.database.ServerValue.TIMESTAMP,
       modified: firebase.database.ServerValue.TIMESTAMP,
       version : 1,

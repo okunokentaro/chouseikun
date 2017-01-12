@@ -31,9 +31,11 @@ export class MainComponent implements OnInit {
     })
 
     groups$.subscribe((groups) => {
-      this.eventsRepository.eventsByGroups$(groups).subscribe((events) => {
-        this.events = events
-      })
+      this.eventsRepository
+        .eventsByGroups$(groups)
+        .subscribe((events) => {
+          this.events = events
+        })
     })
   }
 

@@ -2,6 +2,7 @@ import {BrowserModule} from '@angular/platform-browser'
 import {NgModule} from '@angular/core'
 import {FormsModule} from '@angular/forms'
 import {HttpModule} from '@angular/http'
+import {DateValueAccessorModule} from 'angular-date-value-accessor'
 
 import {NgSemanticModule} from '../ng-semantic/ng-semantic.module'
 import {ConfiguredAngularFireModule} from './firebase-config'
@@ -33,6 +34,7 @@ import {EventsRepositoryService} from './application/event/events-repository.ser
     BrowserModule,
     FormsModule,
     HttpModule,
+    DateValueAccessorModule,
     ROUTING,
   ],
   providers: [
