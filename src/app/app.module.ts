@@ -14,6 +14,7 @@ import {EntranceComponent} from './components/entrance/entrance.component'
 import {AuthButtonComponent} from './components/auth-button/auth-button.component'
 import {MainComponent} from './components/main/main.component'
 import {NewEventComponent} from './components/new-event/new-event.component'
+import {CalendarComponent} from './components/calendar/calendar.component'
 
 import {AuthService} from './services/auth.service'
 import {UsersRepositoryService} from './application/user/users-repository.service'
@@ -26,7 +27,8 @@ import {EventsRepositoryService} from './application/event/events-repository.ser
     EntranceComponent,
     AuthButtonComponent,
     MainComponent,
-    NewEventComponent
+    NewEventComponent,
+    CalendarComponent
   ],
   imports: [
     ConfiguredAngularFireModule,
