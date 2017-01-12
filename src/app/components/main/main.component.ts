@@ -2,6 +2,7 @@ import * as firebase from 'firebase'
 import {Component, OnInit} from '@angular/core'
 import {AngularFire} from 'angularfire2'
 import {Subject} from 'rxjs'
+import {FormGroup, FormControl} from '@angular/forms'
 
 import {
   UsersRepositoryService,
@@ -22,7 +23,7 @@ export class MainComponent implements OnInit {
   my: User
   events: any[]
   screenState: ScreenState
-  eventName: string
+  eventFormGroup: FormGroup
 
   constructor(private af: AngularFire,
               private users: UsersRepositoryService) {
@@ -41,6 +42,11 @@ export class MainComponent implements OnInit {
         })
       })
     })
+
+    this.eventFormGroup = new FormGroup({
+      name         : new FormControl(),
+      selectedGroup: new FormControl()
+    });
   }
 
   ngOnInit() {
@@ -54,17 +60,19 @@ export class MainComponent implements OnInit {
   onSubmit() {
     this.screenState = 'Main'
 
-    if (this.my) {
+    const group = this.my.groups[parseInt(this.eventFormGroup.value.selectedGroup, 10)]
+    if (this.my && group) {
       const uuid = uuidGen()
+      console.log(this.eventFormGroup.value.selectedGroup)
       this.af.database.object(`/${EVENTS_PATH}/${uuid}`).set({
-        name    : this.eventName,
-        group   : this.my.groups[0],
+        name    : this.eventFormGroup.value.name,
+        group   : group,
         creator : this.my.uid,
         version : 1,
         created : firebase.database.ServerValue.TIMESTAMP,
         modified: firebase.database.ServerValue.TIMESTAMP
       }).then(() => {
-        this.eventName = ''
+        this.eventFormGroup.value.name = ''
       })
     }
   }

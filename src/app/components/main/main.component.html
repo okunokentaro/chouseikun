@@ -19,10 +19,23 @@
 <ui-container *ngIf="screenState === 'NewEvent'">
   <ui-grid>
     <ui-column [n]="16">
-      <form class="ui form" (ngSubmit)="onSubmit()">
+      <form class="ui form" [formGroup]="eventFormGroup" (ngSubmit)="onSubmit()">
         <div class="field">
           <label for="eventName">イベント名</label>
-          <input type="text" id="eventName" name="eventName" placeholder="イベント名" required [(ngModel)]="eventName">
+          <input
+            id="eventName"
+            name="eventName"
+            type="text"
+            placeholder="イベント名"
+            required
+            formControlName="name"
+          >
+        </div>
+        <div class="field">
+          <label for="group">グループ</label>
+          <select id="group" class="ui dropdown" formControlName="selectedGroup">
+            <option *ngFor="let v of my.groups; let i = index" [value]="i">{{v}}</option>
+          </select>
         </div>
         <ui-button (uiClick)="onClickCancelNewEvent()">キャンセル</ui-button>
         <ui-button [type]="'submit'" [primary]="true">追加</ui-button>

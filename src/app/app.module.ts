@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser'
 import {NgModule} from '@angular/core'
-import {FormsModule} from '@angular/forms'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 import {HttpModule} from '@angular/http'
 
 import {NgSemanticModule} from '../ng-semantic/ng-semantic.module'
@@ -29,6 +29,7 @@ import {UsersRepositoryService} from './application/user/users-repository.servic
     NgSemanticModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     ROUTING,
   ],
