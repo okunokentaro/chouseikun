@@ -11,6 +11,8 @@ import {uuidGen} from '../../utils/uuid-gen'
 
 type ScreenState = 'Main' | 'NewEvent'
 
+const EVENTS_PATH = 'events'
+
 @Component({
   selector: 'ch-main',
   templateUrl: './main.component.html',
@@ -34,7 +36,7 @@ export class MainComponent implements OnInit {
     groups$.subscribe((groups) => {
       groups.forEach((groupId) => {
         const query = {orderByChild: 'group', equalTo: groupId}
-        this.af.database.list(`/events`, {query}).subscribe((res) => {
+        this.af.database.list(`/${EVENTS_PATH}`, {query}).subscribe((res) => {
           this.events = res
         })
       })
@@ -54,7 +56,7 @@ export class MainComponent implements OnInit {
 
     if (this.my) {
       const uuid = uuidGen()
-      this.af.database.object(`/events/${uuid}`).set({
+      this.af.database.object(`/${EVENTS_PATH}/${uuid}`).set({
         name    : this.eventName,
         group   : this.my.groups[0],
         creator : this.my.uid,
