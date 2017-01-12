@@ -1,3 +1,4 @@
+import * as firebase from 'firebase'
 import {Injectable} from '@angular/core'
 import {AngularFire} from 'angularfire2'
 import {Subject, Observable} from 'rxjs'
@@ -66,9 +67,12 @@ export class AuthService {
       const userExists = uids.find((v) => v === personal.uid)
       if (!userExists) {
         this.af.database.object(`/users/${personal.uid}`).set({
-          name     : personal.name,
-          twitterId: personal.twitterId,
-          photoURL : personal.photoURL
+          name      : personal.name,
+          twitterId : personal.twitterId,
+          photoURL  : personal.photoURL,
+          version   : 1,
+          created   : firebase.database.ServerValue.TIMESTAMP,
+          modified  : firebase.database.ServerValue.TIMESTAMP
         })
       }
     })
