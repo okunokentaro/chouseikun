@@ -1,6 +1,7 @@
 import * as firebase from 'firebase'
 import {Injectable} from '@angular/core'
 import {AngularFire} from 'angularfire2'
+import {Subject} from 'rxjs'
 
 import {uuidGen} from '../../utils/uuid-gen'
 
@@ -24,5 +25,18 @@ export class EventsRepositoryService {
       modified: firebase.database.ServerValue.TIMESTAMP,
       version : 1,
     })
+  }
+
+  events$(groups): Subject<any[]> {
+    const events$ = new Subject<any[]>()
+
+    groups.forEach((groupId) => {
+      const query = {orderByChild: 'group', equalTo: groupId}
+      this.af.database.list(`/${EVENTS_PATH}`, {query}).subscribe((res) => {
+        events$.next(res)
+      })
+    })
+
+    return events$
   }
 }

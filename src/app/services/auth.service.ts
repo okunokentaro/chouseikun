@@ -21,7 +21,7 @@ export class AuthService {
   private loginStatus: LoginStatus
 
   constructor(private af: AngularFire,
-              private users: UsersRepositoryService) {
+              private usersRepository: UsersRepositoryService) {
     const state$ = new Subject<FirebaseAuthState>()
 
     this.af.auth.subscribe((state) => {
@@ -38,8 +38,8 @@ export class AuthService {
       }
     })
 
-    this.users.prepareResisterUser(state$)
-    this.users.myUser$.subscribe((my) => this.my = my)
+    this.usersRepository.prepareResisterUser(state$)
+    this.usersRepository.myUser$.subscribe((my) => this.my = my)
   }
 
   login() {

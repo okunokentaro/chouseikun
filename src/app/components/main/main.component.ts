@@ -1,12 +1,11 @@
 import {Component, OnInit} from '@angular/core'
-import {AngularFire} from 'angularfire2'
 import {Subject} from 'rxjs'
 import {Router} from '@angular/router'
 
 import {UsersRepositoryService} from '../../application/user/users-repository.service'
 import {User} from '../../application/user/user'
 import {AuthService} from '../../services/auth.service'
-import {EVENTS_PATH} from '../../application/event/events-repository.service'
+import {EventsRepositoryService} from '../../application/event/events-repository.service'
 
 type ScreenState = 'Main' | 'NewEvent'
 
@@ -20,23 +19,20 @@ export class MainComponent implements OnInit {
   events: any[]
   screenState: ScreenState
 
-  constructor(private af: AngularFire,
-              private users: UsersRepositoryService,
+  constructor(private usersRepository: UsersRepositoryService,
               private auth: AuthService,
-              private router: Router) {
+              private router: Router,
+              private eventsRepository: EventsRepositoryService) {
     const groups$ = new Subject<string[]>()
 
-    this.users.myUser$.subscribe((my) => {
+    this.usersRepository.myUser$.subscribe((my) => {
       this.my = my
       groups$.next(my.groups)
     })
 
     groups$.subscribe((groups) => {
-      groups.forEach((groupId) => {
-        const query = {orderByChild: 'group', equalTo: groupId}
-        this.af.database.list(`/${EVENTS_PATH}`, {query}).subscribe((res) => {
-          this.events = res
-        })
+      this.eventsRepository.events$(groups).subscribe((events) => {
+        this.events = events
       })
     })
   }
