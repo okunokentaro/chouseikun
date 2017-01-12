@@ -27,7 +27,7 @@ export class EventsRepositoryService {
     })
   }
 
-  events$(groups): Subject<any[]> {
+  eventsByGroups$(groups): Subject<any[]> {
     const events$ = new Subject<any[]>()
 
     groups.forEach((groupId) => {
