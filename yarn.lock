@@ -823,9 +823,9 @@ bytes@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.4.0.tgz#7d97196f9d5baf7f6935e25985549edd2a6c2339"
 
-"cal@git+ssh://git@github.com/leader22/cal.git":
+"cal@git+ssh://git@github.com/armorik83/cal.git#fix-umd":
   version "0.0.5"
-  resolved "git+ssh://git@github.com/leader22/cal.git#34fa694866e648eb5e593c9a0e993c57b5e94a48"
+  resolved "git+ssh://git@github.com/armorik83/cal.git#5eaa7b189bf98cac7c6ae7f1d77528664b71ffa0"
 
 callsite@1.0.0:
   version "1.0.0"

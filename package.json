@@ -13,7 +13,7 @@
     "@angular/router": "^3.3.1",
     "angular-date-value-accessor": "^0.0.1",
     "angularfire2": "2.0.0-beta.7.1-pre",
-    "cal": "git+ssh://git@github.com/leader22/cal.git",
+    "cal": "git+ssh://git@github.com/armorik83/cal.git#fix-umd",
     "core-js": "^2.4.1",
     "crypto-browserify": "^3.11.0",
     "firebase": "^3.6.5",
