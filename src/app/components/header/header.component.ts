@@ -1,7 +1,6 @@
-import {Component, OnInit} from '@angular/core'
-import {Router} from '@angular/router'
+import {Component, OnInit, Input} from '@angular/core'
 
-import {AuthService} from '../../services/auth.service'
+import {User} from '../../application/user/user'
 
 @Component({
   selector: 'ch-header',
@@ -9,12 +8,7 @@ import {AuthService} from '../../services/auth.service'
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  constructor(public auth: AuthService,
-              private router: Router) {}
+  @Input() my: User
 
-  ngOnInit() {
-    this.auth.whenLoggedOut.subscribe(() => {
-      this.router.navigate([''])
-    })
-  }
+  ngOnInit() {}
 }

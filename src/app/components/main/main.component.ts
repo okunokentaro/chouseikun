@@ -1,9 +1,11 @@
 import {Component, OnInit} from '@angular/core'
 import {AngularFire} from 'angularfire2'
 import {Subject} from 'rxjs'
+import {Router} from '@angular/router'
 
 import {UsersRepositoryService} from '../../application/user/users-repository.service'
 import {User} from '../../application/user/user'
+import {AuthService} from '../../services/auth.service'
 
 type ScreenState = 'Main' | 'NewEvent'
 
@@ -20,7 +22,9 @@ export class MainComponent implements OnInit {
   screenState: ScreenState
 
   constructor(private af: AngularFire,
-              private users: UsersRepositoryService) {
+              private users: UsersRepositoryService,
+              private auth: AuthService,
+              private router: Router) {
     const groups$ = new Subject<string[]>()
 
     this.users.myUser$.subscribe((my) => {
@@ -39,6 +43,10 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.auth.whenLoggedOut.subscribe(() => {
+      this.router.navigate([''])
+    })
+
     this.screenState = 'Main'
   }
 
