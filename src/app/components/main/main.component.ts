@@ -46,7 +46,7 @@ export class MainComponent implements OnInit {
     this.eventFormGroup = new FormGroup({
       name         : new FormControl(),
       selectedGroup: new FormControl()
-    });
+    })
   }
 
   ngOnInit() {
