@@ -5,6 +5,7 @@ import {HttpModule} from '@angular/http'
 
 import {NgSemanticModule} from '../ng-semantic/ng-semantic.module'
 import {ConfiguredAngularFireModule} from './firebase-config'
+import {ROUTING} from './app.routing'
 
 import {AppComponent} from './app.component'
 import {HeaderComponent} from './components/header/header.component'
@@ -13,7 +14,7 @@ import {AuthButtonComponent} from './components/auth-button/auth-button.componen
 import {MainComponent} from './components/main/main.component'
 
 import {AuthService} from './services/auth.service'
-import {ROUTING} from './app.routing'
+import {UsersRepositoryService} from './application/user/users-repository.service'
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import {ROUTING} from './app.routing'
   ],
   providers: [
     AuthService,
+    UsersRepositoryService,
   ],
   bootstrap: [AppComponent]
 })
