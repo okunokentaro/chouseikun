@@ -823,9 +823,9 @@ bytes@2.4.0:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-2.4.0.tgz#7d97196f9d5baf7f6935e25985549edd2a6c2339"
 
-cal.js@^1.0.2:
+"cal.js@git+ssh://git@github.com/armorik83/cal.js.git#build-pr6":
   version "1.0.2"
-  resolved "https://registry.yarnpkg.com/cal.js/-/cal.js-1.0.2.tgz#07631ac0d07f3fbbf6187d43ff70e0e993b3ceb4"
+  resolved "git+ssh://git@github.com/armorik83/cal.js.git#54c0b93bb531c6efbc705509b36490952a1bf597"
 
 callsite@1.0.0:
   version "1.0.0"

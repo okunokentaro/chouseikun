@@ -1,3 +1,28 @@
-<p>
-  calendar works!
-</p>
+<ui-grid>
+  <ui-column [n]="6">
+    <ui-button (uiClick)="onClickToLastMonth()">前</ui-button>
+  </ui-column>
+  <ui-column [n]="4" class="center center aligned">
+    <p class="chMiddle">{{label}}</p>
+  </ui-column>
+  <ui-column [n]="6" class="right aligned">
+    <ui-button (uiClick)="onClickToNextMonth()">次</ui-button>
+  </ui-column>
+</ui-grid>
+<table class="ui celled table">
+  <thead>
+    <tr class="center aligned">
+      <th *ngFor="let day of daysOfWeek">{{day.str}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let week of weeks" class="center aligned">
+      <td
+        *ngFor="let date of week"
+        [class.today]     ="isToday(date)"
+        [class.otherMonth]="date.isNextMonth || date.isLastMonth"
+        (click)="onClickDate($event, date)"
+      >{{date.date}}</td>
+    </tr>
+  </tbody>
+</table>

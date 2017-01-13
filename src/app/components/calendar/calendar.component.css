@@ -1,0 +1,24 @@
+.otherMonth {
+  color: #bbb;
+}
+
+.today {
+  color: var(--app-primary-color);
+  background: var(--app-primary-bg-color);
+}
+
+tbody td {
+  cursor: pointer;
+}
+
+tbody td:hover {
+  background: #eee;
+}
+
+tbody td.today:hover {
+  background: #D5DED0;
+}
+
+.chMiddle {
+  line-height: 36px;
+}
