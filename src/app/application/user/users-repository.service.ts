@@ -6,18 +6,17 @@ import {User, PartialUser} from './user'
 
 const USERS_PATH = 'users'
 
-const getTwitterId = (twitter: any): string => {
-  return !!twitter.uid
-    ? twitter.uid
-    : twitter.accessToken.split('-')[0]
+const getTwitterId = (google: any): string => {
+  return google.uid
 }
 
 const myUserFromAuthState = (state: FirebaseAuthState): PartialUser => {
+  console.log(state)
   return {
-    name     : state.auth.displayName,
-    uid      : state.uid,
-    photoURL : state.auth.photoURL,
-    twitterId: getTwitterId(state.twitter)
+    name    : state.auth.displayName,
+    uid     : state.uid,
+    photoURL: state.auth.photoURL,
+    googleId: getTwitterId(state.google)
   }
 }
 
@@ -27,19 +26,19 @@ export class UsersRepositoryService {
   private uids$ = new Subject<string[]>()
 
   constructor(private af: AngularFire) {
-    this.af.database.list(`/${USERS_PATH}`).subscribe((res) => {
-      const uids = res.map((v) => v.$key)
+    this.af.database.list(`/${USERS_PATH}`).subscribe(res => {
+      const uids = res.map(v => v.$key)
       this.uids$.next(uids)
     })
   }
 
   prepareResisterUser(auth$: Subject<FirebaseAuthState>) {
-    Observable.zip(auth$, this.uids$).subscribe((values) => {
+    Observable.zip(auth$, this.uids$).subscribe(values => {
       const [state, uids] = values
 
       const my = myUserFromAuthState(state)
 
-      const userExists = uids.find((v) => v === my.uid)
+      const userExists = uids.find(v => v === my.uid)
       if (!userExists) {
         this.addUser(my)
         return
@@ -50,12 +49,12 @@ export class UsersRepositoryService {
 
   private addUser(user: PartialUser) {
     this.af.database.object(`/${USERS_PATH}/${user.uid}`).set({
-      name      : user.name,
-      twitterId : user.twitterId,
-      photoURL  : user.photoURL,
-      version   : 1,
-      created   : firebase.database.ServerValue.TIMESTAMP,
-      modified  : firebase.database.ServerValue.TIMESTAMP
+      name    : user.name,
+      googleId: user.googleId,
+      photoURL: user.photoURL,
+      version : 1,
+      created : firebase.database.ServerValue.TIMESTAMP,
+      modified: firebase.database.ServerValue.TIMESTAMP,
     }).then(() => {
       this.getMyUser(user.uid)
     })

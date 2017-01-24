@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
               private eventsRepository: EventsRepositoryService) {
     const groups$ = new Subject<string[]>()
 
-    this.usersRepository.myUser$.subscribe((my) => {
+    this.usersRepository.myUser$.subscribe(my => {
       this.my = my
       groups$.next(my.groups)
     })
@@ -33,9 +33,7 @@ export class MainComponent implements OnInit {
     groups$.subscribe((groups) => {
       this.eventsRepository
         .eventsByGroups$(groups)
-        .subscribe((events) => {
-          this.events = events
-        })
+        .subscribe(events => this.events = events)
     })
   }
 

@@ -6,11 +6,11 @@ import {Subject} from 'rxjs'
 import {uuidGen} from '../../utils/uuid-gen'
 
 export interface EventDraft {
-  creator: string
-  name: string
-  group: string
-  due: Date
-  comment: string
+  creator   : string
+  name      : string
+  group     : string
+  due       : Date
+  comment   : string
   candidates: string
 }
 
@@ -23,33 +23,40 @@ export class EventsRepositoryService {
   add(draft: EventDraft): firebase.Promise<void> {
     console.assert(!!draft && !!draft.group, 'draft.group is should not be undefined')
 
-    const candidates = draft.candidates.split('\n').reduce((output, value) => {
-      output[uuidGen()] = value
-      return output
-    }, {})
+    const candidates = draft.candidates
+      .split('\n')
+      .reduce((output, value) => {
+        output[uuidGen()] = value
+        return output
+      }, {})
 
-    const uuid = uuidGen()
-    return this.af.database.object(`/${EVENTS_PATH}/${uuid}`).set({
-      creator   : draft.creator,
-      name      : draft.name,
-      group     : draft.group,
-      due       : draft.due.getTime(),
-      comment   : draft.comment,
-      candidates: candidates,
-      created   : firebase.database.ServerValue.TIMESTAMP,
-      modified  : firebase.database.ServerValue.TIMESTAMP,
-      version   : 1,
-    })
+    return this.af.database
+      .object(`/${EVENTS_PATH}/${uuidGen()}`)
+      .set({
+        creator   : draft.creator,
+        name      : draft.name,
+        group     : draft.group,
+        due       : draft.due.getTime(),
+        comment   : draft.comment,
+        candidates: candidates,
+        created   : firebase.database.ServerValue.TIMESTAMP,
+        modified  : firebase.database.ServerValue.TIMESTAMP,
+        version   : 1,
+      })
   }
 
   eventsByGroups$(groups): Subject<any[]> {
     const events$ = new Subject<any[]>()
 
-    groups.forEach((groupId) => {
+    if (!groups) {
+      return events$
+    }
+
+    groups.forEach(groupId => {
       const query = {orderByChild: 'group', equalTo: groupId}
-      this.af.database.list(`/${EVENTS_PATH}`, {query}).subscribe((res) => {
-        events$.next(res)
-      })
+      this.af.database
+        .list(`/${EVENTS_PATH}`, {query})
+        .subscribe(res => events$.next(res))
     })
 
     return events$

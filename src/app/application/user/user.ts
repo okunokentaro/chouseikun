@@ -1,15 +1,15 @@
 export type PartialUser = {
-  uid: string
-  name: string
+  uid     : string
+  name    : string
   photoURL: string
-  twitterId: string
+  googleId: string
 }
 
 type ExtendedUser = {
-  groups: string[]
-  created: number
+  groups  : string[]
+  created : number
   modified: number
-  version: number
+  version : number
 }
 
 export type User = PartialUser & ExtendedUser

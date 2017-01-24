@@ -10,7 +10,7 @@ export const FIREBASE_CONFIG = {
 }
 
 export const AUTH_CONFIG = {
-  provider: AuthProviders.Twitter,
+  provider: AuthProviders.Google,
   method: AuthMethods.Redirect
 }
 
