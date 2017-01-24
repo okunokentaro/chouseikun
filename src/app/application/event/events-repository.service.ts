@@ -11,7 +11,7 @@ export interface EventDraft {
   group: string
   due: Date
   comment: string
-  candidates: string[]
+  candidates: string
 }
 
 export const EVENTS_PATH = 'events'
@@ -23,16 +23,22 @@ export class EventsRepositoryService {
   add(draft: EventDraft): firebase.Promise<void> {
     console.assert(!!draft && !!draft.group, 'draft.group is should not be undefined')
 
+    const candidates = draft.candidates.split('\n').reduce((output, value) => {
+      output[uuidGen()] = value
+      return output
+    }, {})
+
     const uuid = uuidGen()
     return this.af.database.object(`/${EVENTS_PATH}/${uuid}`).set({
-      creator : draft.creator,
-      name    : draft.name,
-      group   : draft.group,
-      due     : draft.due.getTime(),
-      comment : draft.comment,
-      created : firebase.database.ServerValue.TIMESTAMP,
-      modified: firebase.database.ServerValue.TIMESTAMP,
-      version : 1,
+      creator   : draft.creator,
+      name      : draft.name,
+      group     : draft.group,
+      due       : draft.due.getTime(),
+      comment   : draft.comment,
+      candidates: candidates,
+      created   : firebase.database.ServerValue.TIMESTAMP,
+      modified  : firebase.database.ServerValue.TIMESTAMP,
+      version   : 1,
     })
   }
 

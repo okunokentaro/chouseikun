@@ -50,11 +50,13 @@
               id="candidates"
               name="candidates"
               required
-              [(ngModel)]="rawCandidates"
+              [(ngModel)]="candidates"
             ></textarea>
           </div>
           <div class="eight wide field">
-            <ch-calendar></ch-calendar>
+            <ch-calendar
+              (clickDate)="onClickDate($event)"
+            ></ch-calendar>
           </div>
         </div>
 

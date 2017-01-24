@@ -1,6 +1,8 @@
 import {Component, OnInit, Output, EventEmitter} from '@angular/core'
 const Cal = require('cal.js')
 
+export const DAYS_OF_WEEK = '日 月 火 水 木 金 土'.split(' ')
+
 const getLastMonth = () => {
   const first = this.weeks[0][0]
   const date = new Date(`${first.YYYY}-${first.MM}-${first.DD}`)

@@ -2,6 +2,12 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core'
 
 import {User} from '../../application/user/user'
 import {EventsRepositoryService} from '../../application/event/events-repository.service'
+import {DAYS_OF_WEEK} from '../calendar/calendar.component'
+
+const getLabel = (date: Date) => {
+  const dowStr = DAYS_OF_WEEK[date.getDay()]
+  return `${date.getMonth() + 1}/${date.getDate()}（${dowStr}） 19:00〜`
+}
 
 @Component({
   selector: 'ch-new-event',
@@ -13,7 +19,7 @@ export class NewEventComponent implements OnInit {
   group: string
   due: Date
   comment: string
-  rawCandidates: string
+  candidates: string
 
   @Input() my: User
   @Output() submit = new EventEmitter()
@@ -22,6 +28,7 @@ export class NewEventComponent implements OnInit {
   constructor(private events: EventsRepositoryService) {}
 
   ngOnInit() {
+    this.candidates = ''
     this.initDue()
   }
 
@@ -31,12 +38,12 @@ export class NewEventComponent implements OnInit {
     }
 
     const draft = {
-      creator: this.my.uid,
-      name   : this.name,
-      group  : this.my.groups[parseInt(this.group, 10)],
-      due    : this.due,
-      comment: this.comment,
-      candidates: this.rawCandidates.split('/n')
+      creator   : this.my.uid,
+      name      : this.name,
+      group     : this.my.groups[parseInt(this.group, 10)],
+      due       : this.due,
+      comment   : this.comment,
+      candidates: this.candidates
     }
 
     this.events.add(draft).then(() => {
@@ -47,6 +54,17 @@ export class NewEventComponent implements OnInit {
 
   onClickCancelNewEvent() {
     this.cancel.emit(null)
+  }
+
+  onClickDate(ev: {$event: MouseEvent, date: Date}) {
+    const date = ev.date
+    const label = getLabel(date)
+
+    this.candidates = (() => {
+      const tmp = this.candidates.split('\n')
+      tmp.push(label)
+      return tmp.filter((v) => !!v).join('\n')
+    })()
   }
 
   private initDue() {
