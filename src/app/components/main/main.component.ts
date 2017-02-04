@@ -56,4 +56,8 @@ export class MainComponent implements OnInit {
   onClickCancelNewEvent() {
     this.screenState = 'Main'
   }
+
+  onClickEvent(event: any) {
+    this.router.navigate(['event', event.$key])
+  }
 }

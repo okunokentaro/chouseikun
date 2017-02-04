@@ -10,10 +10,8 @@
         [disabled]="!my"
       >新規イベント</ui-button>
     </ui-column>
-    <ui-column [n]="16">
-      <div *ngFor="let event of events">
-        {{event.name}}
-      </div>
+    <ui-column [n]="16" *ngFor="let event of events">
+      <a (click)="onClickEvent(event)">{{event.name}}</a>
     </ui-column>
   </ui-grid>
 </ui-container>

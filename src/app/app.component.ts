@@ -1,10 +1,8 @@
 import {Component} from '@angular/core'
 
 @Component({
-  selector: 'ch-app',
+  selector   : 'ch-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls  : ['./app.component.css']
 })
-export class AppComponent {
-  constructor() { }
-}
+export class AppComponent {}

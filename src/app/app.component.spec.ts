@@ -1,42 +1,23 @@
 /* tslint:disable:no-unused-variable */
-import {async, ComponentFixture, TestBed} from '@angular/core/testing'
-import {By} from '@angular/platform-browser'
-import {DebugElement, Component, NO_ERRORS_SCHEMA} from '@angular/core'
-import {AngularFire} from 'angularfire2'
-import {RouterTestingModule} from '@angular/router/testing'
 
+import {TestBed, async} from '@angular/core/testing'
 import {AppComponent} from './app.component'
-import {MockAngularFire} from './mocks/vendor/mock-angular-fire'
-import {HeaderComponent} from './components/header/header.component'
+import {NO_ERRORS_SCHEMA} from '@angular/core'
 
 describe('AppComponent', () => {
-  let component: AppComponent
-  let fixture: ComponentFixture<AppComponent>
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        AppComponent,
-        HeaderComponent
-      ],
-      providers: [
-        {provide: AngularFire, useClass: MockAngularFire}
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents()
-  }))
-
   beforeEach(() => {
-    fixture = TestBed.createComponent(AppComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
+    TestBed.configureTestingModule({
+      declarations: [
+        AppComponent
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+    TestBed.compileComponents()
   })
 
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
+  it('should create the app', async(() => {
+    const fixture = TestBed.createComponent(AppComponent)
+    const app = fixture.debugElement.componentInstance
+    expect(app).toBeTruthy()
+  }))
 })

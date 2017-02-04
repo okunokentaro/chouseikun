@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing'
 import {By} from '@angular/platform-browser'
-import {DebugElement} from '@angular/core'
+import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core'
 
 import {CalendarComponent} from './calendar.component'
 
@@ -11,7 +11,8 @@ describe('CalendarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CalendarComponent ]
+      declarations: [ CalendarComponent ],
+      schemas: [NO_ERRORS_SCHEMA],
     })
     .compileComponents()
   }))
