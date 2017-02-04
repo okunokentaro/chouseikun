@@ -19,6 +19,7 @@ import {CalendarComponent} from './components/calendar/calendar.component'
 import {AuthService} from './services/auth.service'
 import {UsersRepositoryService} from './application/user/users-repository.service'
 import {EventsRepositoryService} from './application/event/events-repository.service'
+import {EventsComponent} from './components/events/events.component'
 
 @NgModule({
   declarations: [
@@ -28,9 +29,10 @@ import {EventsRepositoryService} from './application/event/events-repository.ser
     AuthButtonComponent,
     MainComponent,
     NewEventComponent,
-    CalendarComponent
+    CalendarComponent,
+    EventsComponent,
   ],
-  imports: [
+  imports     : [
     ConfiguredAngularFireModule,
     NgSemanticModule,
     BrowserModule,
@@ -39,11 +41,11 @@ import {EventsRepositoryService} from './application/event/events-repository.ser
     DateValueAccessorModule,
     ROUTING,
   ],
-  providers: [
+  providers   : [
     AuthService,
     UsersRepositoryService,
     EventsRepositoryService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap   : [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

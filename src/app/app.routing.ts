@@ -2,6 +2,7 @@ import {Routes, RouterModule} from '@angular/router'
 
 import {EntranceComponent} from './components/entrance/entrance.component'
 import {MainComponent} from './components/main/main.component'
+import {EventsComponent} from './components/events/events.component'
 
 const appRoutes: Routes = [
   {
@@ -11,6 +12,10 @@ const appRoutes: Routes = [
   {
     path     : 'main',
     component: MainComponent
+  },
+  {
+    path     : 'events/:id',
+    component: EventsComponent
   },
   {
     path     : '**',
