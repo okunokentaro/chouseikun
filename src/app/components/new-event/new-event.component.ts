@@ -1,7 +1,10 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core'
 
 import {User} from '../../application/user/user'
-import {EventsRepositoryService} from '../../application/event/events-repository.service'
+import {
+  EventsRepositoryService,
+  EventDraft
+} from '../../application/event/events-repository.service'
 import {DAYS_OF_WEEK} from '../calendar/calendar.component'
 
 const getLabel = (date: Date) => {
@@ -44,7 +47,7 @@ export class NewEventComponent implements OnInit {
       due       : this.due,
       comment   : this.comment,
       candidates: this.candidates
-    }
+    } as EventDraft
 
     this.events.add(draft).then(() => {
       this.submit.emit(null)

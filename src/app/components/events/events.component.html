@@ -1,3 +1,5 @@
-<p>
-  events works!
-</p>
+<ch-header
+  [my]="my"
+></ch-header>
+
+<div>{{(event$ | async).name}}</div>

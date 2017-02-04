@@ -13,8 +13,8 @@ export enum LoginStatus {
 
 @Injectable()
 export class AuthService {
-  whenLoggedIn = new Subject<any>()
-  whenLoggedOut = new Subject<any>()
+  whenLoggedIn$ = new Subject<any>()
+  whenLoggedOut$ = new Subject<any>()
 
   my: User
 
@@ -30,11 +30,11 @@ export class AuthService {
         : LoginStatus.NotLoggedIn
 
       if (this.statusIsLoggedIn()) {
-        this.whenLoggedIn.next(null)
+        this.whenLoggedIn$.next(null)
         state$.next(state)
 
       } else if (this.statusIsNotLoggedIn()) {
-        this.whenLoggedOut.next(null)
+        this.whenLoggedOut$.next(null)
       }
     })
 

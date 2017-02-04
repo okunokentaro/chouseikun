@@ -1,6 +1,6 @@
 import * as firebase from 'firebase'
 import {Injectable} from '@angular/core'
-import {Subject, Observable} from 'rxjs'
+import {Subject, Observable, ReplaySubject} from 'rxjs'
 import {AngularFire, FirebaseAuthState} from 'angularfire2'
 import {User, PartialUser} from './user'
 
@@ -22,7 +22,7 @@ const myUserFromAuthState = (state: FirebaseAuthState): PartialUser => {
 
 @Injectable()
 export class UsersRepositoryService {
-  myUser$ = new Subject<User>()
+  myUser$ = new ReplaySubject<User>()
   private uids$ = new Subject<string[]>()
 
   constructor(private af: AngularFire) {
