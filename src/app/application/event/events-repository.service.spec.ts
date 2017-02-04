@@ -1,17 +1,27 @@
 /* tslint:disable:no-unused-variable */
 
 import {TestBed, async, inject} from '@angular/core/testing'
-import {EventsRepositoryService} from './events-repository.service'
 import {AngularFire} from 'angularfire2'
 
-import {MockAngularFire} from '../../mocks/vendor/mock-angular-fire'
+import {EventsRepositoryService} from './events-repository.service'
+import {AngularFireMock} from '../../vendor-mocks/angular-fire.mock'
+import {EventWriterService} from './event-writer.service'
+import {EventWriterServiceMock} from './event-writer.service.mock'
+import {EventAdapterService} from './event-adapter.service'
+import {EventAdapterServiceMock} from './event-adapter.service.mock'
 
 describe('EventsRepositoryService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        EventsRepositoryService,
-        {provide: AngularFire, useClass: MockAngularFire}
+        {
+          provide : EventsRepositoryService,
+          useClass: EventsRepositoryService,
+          deps    : [EventWriterService]
+        },
+        {provide: AngularFire, useClass: AngularFireMock},
+        {provide: EventWriterService, useClass: EventWriterServiceMock},
+        {provide: EventAdapterService, useClass: EventAdapterServiceMock},
       ]
     })
   })

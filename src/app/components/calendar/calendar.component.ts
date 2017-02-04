@@ -49,14 +49,14 @@ export class CalendarComponent implements OnInit {
   }
 
   onClickDate($event: MouseEvent, d: any) {
-    const date = new Date(d.year, d.month, d.date);
+    const date = new Date(d.year, d.month, d.date)
     this.clickDate.emit({$event, date})
   }
 
   isToday(d: any): boolean {
     const today = new Date()
 
-    const a = new Date(d.year, d.month, d.date);
+    const a = new Date(d.year, d.month, d.date)
     const b = new Date(today.getFullYear(), today.getMonth(), today.getDate())
 
     return a.getTime() === b.getTime()

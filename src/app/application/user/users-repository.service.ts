@@ -1,7 +1,10 @@
 import * as firebase from 'firebase'
 import {Injectable} from '@angular/core'
-import {Subject, Observable, ReplaySubject} from 'rxjs'
+import {Subject} from 'rxjs/Subject'
+import {ReplaySubject} from 'rxjs/ReplaySubject'
+import {Observable} from 'rxjs/Observable'
 import {AngularFire, FirebaseAuthState} from 'angularfire2'
+
 import {User, PartialUser} from './user'
 
 const USERS_PATH = 'users'

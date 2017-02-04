@@ -1,20 +1,19 @@
 /* tslint:disable:no-unused-variable */
 import {AngularFire} from 'angularfire2'
-import {Subject} from 'rxjs'
-
 import {TestBed, async, inject} from '@angular/core/testing'
+
 import {AuthService} from './auth.service'
-import {MockAngularFire} from '../mocks/vendor/mock-angular-fire'
+import {AngularFireMock} from '../vendor-mocks/angular-fire.mock'
 import {UsersRepositoryService} from '../application/user/users-repository.service'
-import {MockUsersRepositoryService} from '../mocks/application/user/mock-users-repository.service'
+import {UsersRepositoryServiceMock} from '../application/user/users-repository.service.mock'
 
 describe('AuthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         AuthService,
-        {provide: UsersRepositoryService, useClass: MockUsersRepositoryService},
-        {provide: AngularFire, useClass: MockAngularFire}
+        {provide: UsersRepositoryService, useClass: UsersRepositoryServiceMock},
+        {provide: AngularFire, useClass: AngularFireMock}
       ]
     })
   })

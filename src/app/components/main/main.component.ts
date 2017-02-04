@@ -1,19 +1,20 @@
 import {Component, OnInit, OnDestroy} from '@angular/core'
-import {Subject, Subscription} from 'rxjs'
+import {Subject} from 'rxjs/Subject'
+import {Subscription} from 'rxjs/Subscription'
 import {Router} from '@angular/router'
 
+import {AuthService} from '../../services/auth.service'
 import {UsersRepositoryService} from '../../application/user/users-repository.service'
+import {EventsRepositoryService} from '../../application/event/events-repository.service'
 import {User} from '../../application/user/user'
 import {Event} from '../../application/event/event'
-import {AuthService} from '../../services/auth.service'
-import {EventsRepositoryService} from '../../application/event/events-repository.service'
 
 type ScreenState = 'Main' | 'NewEvent'
 
 @Component({
-  selector: 'ch-main',
+  selector   : 'ch-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  styleUrls  : ['./main.component.css']
 })
 export class MainComponent implements OnInit, OnDestroy {
   my: User
@@ -37,12 +38,11 @@ export class MainComponent implements OnInit, OnDestroy {
 
     const groups$ = new Subject<string[]>()
     groups$.subscribe(groups => {
-      this.eventsRepository
-        .getEventsByGroups$(groups)
-        .subscribe(v => {
-          console.log(v)
-          this.events = v
-        })
+      this.subscriptions.push(
+        this.eventsRepository
+          .getEventsByGroups$(groups)
+          .subscribe(v => this.events = v)
+      )
     })
 
     this.subscriptions.push(

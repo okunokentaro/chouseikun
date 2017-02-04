@@ -1,10 +1,11 @@
 /* tslint:disable:no-unused-variable */
 import {async, ComponentFixture, TestBed} from '@angular/core/testing'
 import {By} from '@angular/platform-browser'
-import {DebugElement} from '@angular/core'
+import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core'
 
 import {AuthButtonComponent} from './auth-button.component'
-import {AppTestingModule} from '../../mocks/app-testing.module'
+import {AuthService} from '../../services/auth.service'
+import {AuthServiceMock} from '../../services/auth.service.mock'
 
 describe('AuthButtonComponent', () => {
   let component: AuthButtonComponent
@@ -12,9 +13,13 @@ describe('AuthButtonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        AppTestingModule
-      ]
+      declarations: [
+        AuthButtonComponent
+      ],
+      providers: [
+        {provide: AuthService, useClass: AuthServiceMock},
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents()
   }))

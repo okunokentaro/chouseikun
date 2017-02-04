@@ -5,7 +5,8 @@ import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core'
 import {RouterTestingModule} from '@angular/router/testing'
 
 import {EntranceComponent} from './entrance.component'
-import {AppTestingModule} from '../../mocks/app-testing.module'
+import {AuthService} from '../../services/auth.service'
+import {AuthServiceMock} from '../../services/auth.service.mock'
 
 describe('EntranceComponent', () => {
   let component: EntranceComponent
@@ -14,8 +15,13 @@ describe('EntranceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        AppTestingModule,
         RouterTestingModule,
+      ],
+      declarations: [
+        EntranceComponent
+      ],
+      providers: [
+        {provide: AuthService, useClass: AuthServiceMock},
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

@@ -20,6 +20,8 @@ import {AuthService} from './services/auth.service'
 import {UsersRepositoryService} from './application/user/users-repository.service'
 import {EventsRepositoryService} from './application/event/events-repository.service'
 import {EventsComponent} from './components/events/events.component'
+import {EventAdapterService} from './application/event/event-adapter.service'
+import {EventWriterService} from './application/event/event-writer.service'
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import {EventsComponent} from './components/events/events.component'
     AuthService,
     UsersRepositoryService,
     EventsRepositoryService,
+    EventAdapterService,
+    EventWriterService,
   ],
   bootstrap   : [AppComponent]
 })

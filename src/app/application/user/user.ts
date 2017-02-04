@@ -1,11 +1,11 @@
-export type PartialUser = {
+export interface PartialUser {
   uid     : string
   name    : string
   photoURL: string
   googleId: string
 }
 
-type ExtendedUser = {
+interface ExtendedUser {
   groups  : string[]
   created : number
   modified: number

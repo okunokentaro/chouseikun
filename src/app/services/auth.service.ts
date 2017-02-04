@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core'
 import {AngularFire, FirebaseAuthState} from 'angularfire2'
-import {Subject, Observable} from 'rxjs'
+import {Subject} from 'rxjs/Subject'
 
 import {UsersRepositoryService} from '../application/user/users-repository.service'
 import {User} from '../application/user/user'

@@ -1,10 +1,8 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core'
 
 import {User} from '../../application/user/user'
-import {
-  EventsRepositoryService,
-  EventDraft
-} from '../../application/event/events-repository.service'
+import {EventsRepositoryService} from '../../application/event/events-repository.service'
+import {EventDraft} from '../../application/event/event-writer.service'
 import {DAYS_OF_WEEK} from '../calendar/calendar.component'
 
 const getLabel = (date: Date) => {
@@ -13,9 +11,9 @@ const getLabel = (date: Date) => {
 }
 
 @Component({
-  selector: 'ch-new-event',
+  selector   : 'ch-new-event',
   templateUrl: './new-event.component.html',
-  styleUrls: ['./new-event.component.css']
+  styleUrls  : ['./new-event.component.css']
 })
 export class NewEventComponent implements OnInit {
   name: string
@@ -28,7 +26,7 @@ export class NewEventComponent implements OnInit {
   @Output() submit = new EventEmitter()
   @Output() cancel = new EventEmitter()
 
-  constructor(private events: EventsRepositoryService) {}
+  constructor(private eventsRepository: EventsRepositoryService) {}
 
   ngOnInit() {
     this.candidates = ''
@@ -49,10 +47,12 @@ export class NewEventComponent implements OnInit {
       candidates: this.candidates
     } as EventDraft
 
-    this.events.add(draft).then(() => {
-      this.submit.emit(null)
-      this.name = ''
-    })
+    this.eventsRepository
+      .add(draft)
+      .then(() => {
+        this.submit.emit(null)
+        this.name = ''
+      })
   }
 
   onClickCancelNewEvent() {
@@ -60,7 +60,7 @@ export class NewEventComponent implements OnInit {
   }
 
   onClickDate(ev: {$event: MouseEvent, date: Date}) {
-    const date = ev.date
+    const date  = ev.date
     const label = getLabel(date)
 
     this.candidates = (() => {

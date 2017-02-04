@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core'
 import {ActivatedRoute} from '@angular/router'
-import {Subject} from 'rxjs'
+import {Subject} from 'rxjs/Subject'
 
 import {User} from '../../application/user/user'
 import {UsersRepositoryService} from '../../application/user/users-repository.service'
 import {EventsRepositoryService} from '../../application/event/events-repository.service'
 
 @Component({
-  selector: 'ch-events',
+  selector   : 'ch-events',
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css']
+  styleUrls  : ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
   my: User
@@ -18,7 +18,8 @@ export class EventsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private usersRepository: UsersRepositoryService,
-              private eventsRepository: EventsRepositoryService) {}
+              private eventsRepository: EventsRepositoryService) {
+  }
 
   ngOnInit() {
     const eventId$ = new Subject<string>()

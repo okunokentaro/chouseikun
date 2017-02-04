@@ -4,7 +4,8 @@ import {By} from '@angular/platform-browser'
 import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core'
 
 import {NewEventComponent} from './new-event.component'
-import {AppTestingModule} from '../../mocks/app-testing.module'
+import {EventsRepositoryService} from '../../application/event/events-repository.service'
+import {EventsRepositoryServiceMock} from '../../application/event/events-repository.service.mock'
 
 describe('NewEventComponent', () => {
   let component: NewEventComponent
@@ -12,8 +13,11 @@ describe('NewEventComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        AppTestingModule
+      declarations: [
+        NewEventComponent
+      ],
+      providers: [
+        {provide: EventsRepositoryService, useClass: EventsRepositoryServiceMock},
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })

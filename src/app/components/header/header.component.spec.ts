@@ -4,7 +4,6 @@ import {By} from '@angular/platform-browser'
 import {DebugElement, NO_ERRORS_SCHEMA} from '@angular/core'
 
 import {HeaderComponent} from './header.component'
-import {AppTestingModule} from '../../mocks/app-testing.module'
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent
@@ -12,8 +11,8 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        AppTestingModule,
+      declarations: [
+        HeaderComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
