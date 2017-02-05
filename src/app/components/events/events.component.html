@@ -2,4 +2,24 @@
   [my]="my"
 ></ch-header>
 
-<div>{{(event$ | async)?.name}}</div>
+<ui-container>
+  <ui-grid>
+    <ui-column [n]="16">
+      <h2>{{event?.name}}</h2>
+    </ui-column>
+  </ui-grid>
+
+  <ui-grid>
+    <ui-column [n]="16">
+      <p>{{event?.comment}}</p>
+    </ui-column>
+  </ui-grid>
+
+  <ui-grid>
+    <ui-column [n]="16">
+      <p *ngFor="let candidate of event?.candidates">
+        {{candidate.value}}
+      </p>
+    </ui-column>
+  </ui-grid>
+</ui-container>

@@ -1,8 +1,8 @@
 import * as firebase from 'firebase'
 import {Injectable} from '@angular/core'
-import {Subject} from 'rxjs/Subject'
-import {ReplaySubject} from 'rxjs/ReplaySubject'
-import {Observable} from 'rxjs/Observable'
+import {Subject} from 'rxjs/Rx'
+import {ReplaySubject} from 'rxjs/Rx'
+import {Observable} from 'rxjs/Rx'
 import {AngularFire, FirebaseAuthState} from 'angularfire2'
 
 import {User, PartialUser} from './user'
@@ -14,7 +14,6 @@ const getTwitterId = (google: any): string => {
 }
 
 const myUserFromAuthState = (state: FirebaseAuthState): PartialUser => {
-  console.log(state)
   return {
     name    : state.auth.displayName,
     uid     : state.uid,

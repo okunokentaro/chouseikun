@@ -1,8 +1,10 @@
+import * as firebase from 'firebase'
 import {Injectable} from '@angular/core'
 import {AngularFire} from 'angularfire2'
 
 import {uuidGen} from '../../utils/uuid-gen'
-import {EVENTS_PATH} from './events-repository.service'
+import {EVENTS_PATH} from './event-const'
+import {EventResponseV2} from './event-response'
 
 export interface EventDraft {
   candidates: string
@@ -13,11 +15,16 @@ export interface EventDraft {
   name      : string
 }
 
+const LATEST_VERSION = 2
+
 const formatCandidates = (draft: EventDraft) => {
   return draft.candidates
     .split('\n')
-    .reduce((output, v) => {
-      output[uuidGen()] = v
+    .reduce((output, v, idx) => {
+      output[uuidGen()] = {
+        value    : v,
+        sortOrder: idx
+      }
       return output
     }, {})
 }
@@ -41,7 +48,17 @@ export class EventWriterService {
         candidates: formatCandidates(draft),
         created   : firebase.database.ServerValue.TIMESTAMP,
         modified  : firebase.database.ServerValue.TIMESTAMP,
-        version   : 1,
+        version   : LATEST_VERSION,
+      })
+  }
+
+  convert1to2(event: EventResponseV2) {
+    this.af.database
+      .object(`/${EVENTS_PATH}/${event.$key}`)
+      .update({
+        candidates: event.candidates,
+        modified  : firebase.database.ServerValue.TIMESTAMP,
+        version   : LATEST_VERSION,
       })
   }
 

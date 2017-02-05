@@ -1,29 +1,13 @@
 import * as firebase from 'firebase'
 import {Injectable} from '@angular/core'
 import {AngularFire} from 'angularfire2'
-import {ReplaySubject} from 'rxjs/ReplaySubject'
-import {Observable} from 'rxjs/Observable'
+import {Observable, ReplaySubject} from 'rxjs/Rx'
 
 import {Event} from './event'
 import {EventWriterService, EventDraft} from './event-writer.service'
 import {EventAdapterService} from './event-adapter.service'
-
-type CandidatesResponse = {[id: string]: string} | undefined
-
-export interface EventResponse {
-  candidates: CandidatesResponse
-  comment   : string
-  created   : number
-  creator   : string
-  due       : number
-  group     : string
-  modified  : number
-  name      : string
-  version   : number
-  $key      : string
-}
-
-export const EVENTS_PATH = 'events'
+import {EventResponse} from './event-response'
+import {EVENTS_PATH} from './event-const'
 
 @Injectable()
 export class EventsRepositoryService {

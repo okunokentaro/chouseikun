@@ -1,5 +1,5 @@
 import {Component, OnInit, OnDestroy} from '@angular/core'
-import {Subject} from 'rxjs/Subject'
+import {Subject} from 'rxjs/Rx'
 import {Subscription} from 'rxjs/Subscription'
 import {Router} from '@angular/router'
 
@@ -17,16 +17,15 @@ type ScreenState = 'Main' | 'NewEvent'
   styleUrls  : ['./main.component.css']
 })
 export class MainComponent implements OnInit, OnDestroy {
+  subscriptions = [] as Subscription[]
   my: User
   events: Event[]
   screenState: ScreenState
-  subscriptions: Subscription[]
 
   constructor(private usersRepository: UsersRepositoryService,
               private auth: AuthService,
               private router: Router,
               private eventsRepository: EventsRepositoryService) {
-    this.subscriptions = []
   }
 
   ngOnInit() {
@@ -46,10 +45,11 @@ export class MainComponent implements OnInit, OnDestroy {
     })
 
     this.subscriptions.push(
-      this.usersRepository.myUser$.subscribe(my => {
-        this.my = my
-        groups$.next(my.groups)
-      })
+      this.usersRepository.myUser$
+        .subscribe(my => {
+          this.my = my
+          groups$.next(my.groups)
+        })
     )
 
     this.screenState = 'Main'
