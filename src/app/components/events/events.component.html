@@ -17,9 +17,42 @@
 
   <ui-grid>
     <ui-column [n]="16">
-      <p *ngFor="let candidate of event?.candidates">
-        {{candidate.value}}
-      </p>
+      <table class="ui celled table">
+        <tr class="center aligned" *ngFor="let tableRow of table">
+          <td *ngFor="let tableCell of tableRow">{{tableCell}}</td>
+        </tr>
+      </table>
+    </ui-column>
+  </ui-grid>
+
+  <ui-grid>
+    <ui-column [n]="16">
+      <table class="ui celled table">
+        <tr class="center aligned" *ngFor="let candidate of event?.candidates">
+          <td>{{candidate.value}}</td>
+          <td class="ch-answer-cell" [class.selected]="answer[candidate.id] === 2" (click)="onClickO(candidate.id)">○</td>
+          <td class="ch-answer-cell" [class.selected]="answer[candidate.id] === 1" (click)="onClickA(candidate.id)">△</td>
+          <td class="ch-answer-cell" [class.selected]="answer[candidate.id] === 0" (click)="onClickX(candidate.id)">✕</td>
+        </tr>
+      </table>
+    </ui-column>
+  </ui-grid>
+
+  <ui-grid>
+    <ui-column [n]="16">
+      <form class="ui form">
+        <div class="field">
+          <label for="comment">コメント（任意）</label>
+          <input
+            id="comment"
+            name="comment"
+            type="text"
+            placeholder="コメント"
+            [(ngModel)]="comment"
+          >
+        </div>
+        <ui-button (uiClick)="onClickSend()">入力する</ui-button>
+      </form>
     </ui-column>
   </ui-grid>
 </ui-container>

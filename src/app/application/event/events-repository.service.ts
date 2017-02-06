@@ -8,6 +8,7 @@ import {EventWriterService, EventDraft} from './event-writer.service'
 import {EventAdapterService} from './event-adapter.service'
 import {EventResponse} from './event-response'
 import {EVENTS_PATH} from './event-const'
+import {AnswerDraft} from '../answer/answer-draft';
 
 @Injectable()
 export class EventsRepositoryService {
@@ -17,6 +18,10 @@ export class EventsRepositoryService {
 
   add(draft: EventDraft): firebase.Promise<void> {
     return this.writer.write(draft)
+  }
+
+  sendAnswer(draft: AnswerDraft) {
+    return this.writer.sendAnswer(draft)
   }
 
   getEventsByGroups$(groups: string[]): Observable<Event[]> {

@@ -4,7 +4,8 @@ import {AngularFire} from 'angularfire2'
 
 import {uuidGen} from '../../utils/uuid-gen'
 import {EVENTS_PATH} from './event-const'
-import {EventResponseV2} from './event-response'
+import {EventResponseV02, EventResponseV03} from './event-response'
+import {AnswerDraft} from '../answer/answer-draft';
 
 export interface EventDraft {
   candidates: string
@@ -15,7 +16,7 @@ export interface EventDraft {
   name      : string
 }
 
-const LATEST_VERSION = 2
+const LATEST_VERSION = 3
 
 const formatCandidates = (draft: EventDraft) => {
   return draft.candidates
@@ -46,19 +47,44 @@ export class EventWriterService {
         due       : draft.due.getTime(),
         comment   : draft.comment,
         candidates: formatCandidates(draft),
+        answers   : {},
         created   : firebase.database.ServerValue.TIMESTAMP,
         modified  : firebase.database.ServerValue.TIMESTAMP,
         version   : LATEST_VERSION,
       })
   }
 
-  convert1to2(event: EventResponseV2) {
+  sendAnswer(draft: AnswerDraft): firebase.Promise<void> {
+    draft.answers[draft.uid] = {
+      answer : draft.answer,
+      comment: draft.comment || ''
+    }
+
+    return this.af.database
+      .object(`/${EVENTS_PATH}/${draft.eventId}`)
+      .update({
+        answers : draft.answers,
+        modified: firebase.database.ServerValue.TIMESTAMP,
+      })
+  }
+
+  convert1to2(event: EventResponseV02) {
     this.af.database
       .object(`/${EVENTS_PATH}/${event.$key}`)
       .update({
         candidates: event.candidates,
         modified  : firebase.database.ServerValue.TIMESTAMP,
-        version   : LATEST_VERSION,
+        version   : 2,
+      })
+  }
+
+  convert2to3(event: EventResponseV03) {
+    this.af.database
+      .object(`/${EVENTS_PATH}/${event.$key}`)
+      .update({
+        answers : event.answers,
+        modified: firebase.database.ServerValue.TIMESTAMP,
+        version : 3,
       })
   }
 

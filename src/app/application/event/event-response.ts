@@ -1,14 +1,16 @@
-type CandidatesResponseV1 = {[id: string]: string} | undefined
+import {Answers} from './event'
 
-type CandidatesResponseV2 = {
+type CandidatesResponseV01 = {[id: string]: string} | undefined
+
+type CandidatesResponseV02 = {
   [id: string]: {
     value: string,
     sortOrder: number
   }
 } | undefined
 
-export interface EventResponseV1 {
-  candidates: CandidatesResponseV1
+export interface EventResponseV01 {
+  candidates: CandidatesResponseV01
   comment   : string
   created   : number
   creator   : string
@@ -18,10 +20,11 @@ export interface EventResponseV1 {
   name      : string
   version   : number
   $key      : string
+  answers?  : any
 }
 
-export interface EventResponseV2 {
-  candidates: CandidatesResponseV2
+export interface EventResponseV02 {
+  candidates: CandidatesResponseV02
   comment   : string
   created   : number
   creator   : string
@@ -31,6 +34,24 @@ export interface EventResponseV2 {
   name      : string
   version   : number
   $key      : string
+  answers?  : any
 }
 
-export type EventResponse = EventResponseV1 | EventResponseV2
+export interface EventResponseV03 {
+  candidates: CandidatesResponseV02
+  comment   : string
+  created   : number
+  creator   : string
+  due       : number
+  group     : string
+  modified  : number
+  name      : string
+  version   : number
+  $key      : string
+  answers   : Answers
+}
+
+export type EventResponse =
+  EventResponseV03 |
+  EventResponseV02 |
+  EventResponseV01

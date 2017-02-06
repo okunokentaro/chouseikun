@@ -1,0 +1,14 @@
+.ch-answer-cell {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.ch-answer-cell {
+  color: #DADADA;
+  background: #F4F4F4;
+}
+
+.selected {
+  color: white;
+  background: #5BB123;
+}

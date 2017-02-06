@@ -2,7 +2,11 @@ import {Injectable} from '@angular/core'
 
 import {Event} from './event'
 import {EventWriterService} from './event-writer.service'
-import {EventResponse, EventResponseV2} from './event-response'
+import {
+  EventResponse,
+  EventResponseV02,
+  EventResponseV03
+} from './event-response'
 
 @Injectable()
 export class EventAdapterService {
@@ -10,18 +14,19 @@ export class EventAdapterService {
   constructor(private writer: EventWriterService) {}
 
   adapt(res: EventResponse): Event {
-    const v2Res: EventResponseV2 = this.convert1to2(res)
+    const v2Res: EventResponseV02 = this.convert1to2(res)
+    const v3Res: EventResponseV03 = this.convert2to3(v2Res)
 
     const candidates = (() => {
-      if (!v2Res.candidates) {
+      if (!v3Res.candidates) {
         return []
       }
-      return Object.keys(v2Res.candidates)
+      return Object.keys(v3Res.candidates)
         .reduce((output, v) => {
           output.push({
             id       : v,
-            value    : v2Res.candidates[v].value,
-            sortOrder: v2Res.candidates[v].sortOrder
+            value    : v3Res.candidates[v].value,
+            sortOrder: v3Res.candidates[v].sortOrder
           })
           return output
         }, [])
@@ -33,21 +38,24 @@ export class EventAdapterService {
 
     const adapted = {
       candidates: candidatesSorted,
-      comment   : v2Res.comment,
-      created   : v2Res.created,
-      creator   : v2Res.creator,
-      due       : v2Res.due,
-      group     : v2Res.group,
-      modified  : v2Res.modified,
-      name      : v2Res.name,
-      version   : v2Res.version,
-      eventId   : v2Res.$key,
+      comment   : v3Res.comment,
+      created   : v3Res.created,
+      creator   : v3Res.creator,
+      due       : v3Res.due,
+      group     : v3Res.group,
+      modified  : v3Res.modified,
+      name      : v3Res.name,
+      version   : v3Res.version,
+      eventId   : v3Res.$key,
+      answers   : v3Res.answers || {},
     }
 
     return new Event(adapted)
   }
 
-  private convert1to2(res: EventResponse): EventResponseV2 {
+  private convert1to2(res: EventResponse): EventResponseV02 {
+    const currentVersion = res.version
+
     const candidates = (() => {
       if (res.version === 1) {
         if (!res.candidates) {
@@ -65,11 +73,26 @@ export class EventAdapterService {
     })()
 
     delete res.candidates
-    const retVal = Object.assign({}, res) as EventResponseV2
+    const retVal = Object.assign({}, res) as EventResponseV02
     retVal.candidates = candidates
 
-    if (res.version === 1) {
+    if (currentVersion === 1) {
       this.writer.convert1to2(retVal)
+      retVal.version += 1
+    }
+
+    return retVal
+  }
+
+  private convert2to3(res: EventResponse): EventResponseV03 {
+    const currentVersion = res.version
+
+    res.answers = res.answers || {}
+
+    const retVal = res as EventResponseV03
+    if (currentVersion === 2) {
+      this.writer.convert2to3(retVal)
+      retVal.version += 1
     }
 
     return retVal
