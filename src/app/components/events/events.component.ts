@@ -40,7 +40,7 @@ export class EventsComponent implements OnInit, OnDestroy {
           .subscribe(event => {
             this.event = event
             this.table = this.event.getAnsweredTable()
-            this.initAnswer()
+            this.initAnswer(this.my, this.event)
           })
       )
     })
@@ -56,7 +56,10 @@ export class EventsComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.usersRepository.myUser$
-        .subscribe(my => this.my = my)
+        .subscribe(my => {
+          this.my = my
+          this.initAnswer(this.my, this.event)
+        })
     )
   }
 
@@ -87,9 +90,15 @@ export class EventsComponent implements OnInit, OnDestroy {
     this.eventsRepository.sendAnswer(draft)
   }
 
-  private initAnswer() {
-    this.event.candidates.forEach(v => {
-      this.setAnswer(v.id, 0)
+  private initAnswer(user: User, event: Event) {
+    if (!user || !this.event.answeredUsers.find(u => u === user.uid)) {
+      event.candidates.forEach(v => this.setAnswer(v.id, 0))
+      return
+    }
+    const myAnswer = event.answers[user.uid].answer
+    event.candidates.forEach(v => {
+      const target = myAnswer.find(answer => answer.candidateId === v.id)
+      this.setAnswer(v.id, target.value)
     })
   }
 

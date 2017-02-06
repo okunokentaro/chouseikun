@@ -43,13 +43,14 @@ export class Event {
   get name(): string            { return this.item.name }
   get eventId(): string         { return this.item.eventId }
   get answers(): Answers        { return this.item.answers }
+  get answeredUsers(): string[] { return Object.keys(this.answers) }
 
   getAnsweredTable(): string[][] {
     const ids    = this.candidates.map(v => v.id)
     const values = this.candidates.map(v => v.value)
     values.unshift('')
 
-    const users          = Object.keys(this.answers)
+    const users          = this.answeredUsers
     const userAnswersMap = users.reduce((output, key) => {
       output[key] = ids.map(id => {
         const answer = this.answers[key].answer
