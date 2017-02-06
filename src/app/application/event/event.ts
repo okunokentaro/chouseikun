@@ -3,9 +3,14 @@ interface Candidate {
   value: string
 }
 
+export interface Answer {
+  candidateId: string,
+  value      : number
+}
+
 export interface Answers {
   [userId: string]: {
-    answer : {candidateId: string, value: number}[],
+    answer : Answer[],
     comment: string
   }
 }
@@ -37,21 +42,22 @@ export class Event {
   get modified(): number        { return this.item.modified }
   get name(): string            { return this.item.name }
   get eventId(): string         { return this.item.eventId }
-  get answers(): Object         { return this.item.answers }
+  get answers(): Answers        { return this.item.answers }
 
   getAnsweredTable(): string[][] {
     const ids    = this.candidates.map(v => v.id)
     const values = this.candidates.map(v => v.value)
     values.unshift('')
 
-    const userAnswersMap = Object.keys(this.answers).reduce((output, key, currentIndex) => {
+    const users          = Object.keys(this.answers)
+    const userAnswersMap = users.reduce((output, key) => {
       output[key] = ids.map(id => {
-        return this.answers[key].answer.find(a => a.candidateId === id).value
+        const answer = this.answers[key].answer
+        const target = answer.find(a => a.candidateId === id)
+        return target.value
       })
       return output
     }, {})
-
-    const users = Object.keys(userAnswersMap)
 
     return values.map((v, i) => {
       if (i === 0) {

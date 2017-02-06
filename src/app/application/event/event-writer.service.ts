@@ -30,6 +30,10 @@ const formatCandidates = (draft: EventDraft) => {
     }, {})
 }
 
+const eventPath = (eventId: string) => {
+  return `/${EVENTS_PATH}/${eventId}`
+}
+
 @Injectable()
 export class EventWriterService {
 
@@ -38,8 +42,9 @@ export class EventWriterService {
   write(draft: EventDraft): firebase.Promise<void> {
     console.assert(!!draft && !!draft.group, 'draft.group is should not be undefined')
 
+    const eventId = uuidGen()
     return this.af.database
-      .object(`/${EVENTS_PATH}/${uuidGen()}`)
+      .object(eventPath(eventId))
       .set({
         creator   : draft.creator,
         name      : draft.name,
@@ -57,11 +62,11 @@ export class EventWriterService {
   sendAnswer(draft: AnswerDraft): firebase.Promise<void> {
     draft.answers[draft.uid] = {
       answer : draft.answer,
-      comment: draft.comment || ''
+      comment: draft.comment
     }
 
     return this.af.database
-      .object(`/${EVENTS_PATH}/${draft.eventId}`)
+      .object(eventPath(draft.eventId))
       .update({
         answers : draft.answers,
         modified: firebase.database.ServerValue.TIMESTAMP,
@@ -70,7 +75,7 @@ export class EventWriterService {
 
   convert1to2(event: EventResponseV02) {
     this.af.database
-      .object(`/${EVENTS_PATH}/${event.$key}`)
+      .object(eventPath(event.$key))
       .update({
         candidates: event.candidates,
         modified  : firebase.database.ServerValue.TIMESTAMP,
@@ -80,7 +85,7 @@ export class EventWriterService {
 
   convert2to3(event: EventResponseV03) {
     this.af.database
-      .object(`/${EVENTS_PATH}/${event.$key}`)
+      .object(eventPath(event.$key))
       .update({
         answers : event.answers,
         modified: firebase.database.ServerValue.TIMESTAMP,

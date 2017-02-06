@@ -6,7 +6,10 @@ import {User} from '../../application/user/user'
 import {Event} from '../../application/event/event'
 import {UsersRepositoryService} from '../../application/user/users-repository.service'
 import {EventsRepositoryService} from '../../application/event/events-repository.service'
-import { AnswerDraft } from '../../application/answer/answer-draft';
+import {
+  AnswerDraft,
+  AnswerModel
+} from '../../application/answer/answer-draft';
 
 @Component({
   selector   : 'ch-events',
@@ -15,17 +18,17 @@ import { AnswerDraft } from '../../application/answer/answer-draft';
 })
 export class EventsComponent implements OnInit, OnDestroy {
   subscriptions = [] as Subscription[]
-  my: User
-  eventId: string
-  event: Event
-  answer: {[candidateId: string]: number}
-  comment: string
-  table: string[][]
+  my         : User
+  eventId    : string
+  event      : Event
+  answerModel: AnswerModel
+  comment    : string
+  table      : string[][]
 
   constructor(private route: ActivatedRoute,
               private usersRepository: UsersRepositoryService,
               private eventsRepository: EventsRepositoryService) {
-    this.answer = {}
+    this.answerModel = {}
   }
 
   ngOnInit() {
@@ -34,8 +37,8 @@ export class EventsComponent implements OnInit, OnDestroy {
       this.subscriptions.push(
         this.eventsRepository
           .getEvent$(eventId)
-          .subscribe(v => {
-            this.event = v
+          .subscribe(event => {
+            this.event = event
             this.table = this.event.getAnsweredTable()
             this.initAnswer()
           })
@@ -53,9 +56,7 @@ export class EventsComponent implements OnInit, OnDestroy {
 
     this.subscriptions.push(
       this.usersRepository.myUser$
-        .subscribe(my => {
-          this.my = my
-        })
+        .subscribe(my => this.my = my)
     )
   }
 
@@ -79,7 +80,7 @@ export class EventsComponent implements OnInit, OnDestroy {
     const draft = new AnswerDraft(
       this.my,
       this.event,
-      this.answer,
+      this.answerModel,
       this.comment,
     )
 
@@ -93,7 +94,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   private setAnswer(candidateId: string, value: number) {
-    this.answer[candidateId] = value
+    this.answerModel[candidateId] = value
   }
 
 }
