@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core'
 import {ActivatedRoute} from '@angular/router'
-import { Observable, Subject, Subscription } from 'rxjs/Rx'
+import {Observable, ReplaySubject, Subject, Subscription} from 'rxjs/Rx'
 
 import {User} from '../../application/user/user'
 import {Event} from '../../application/event/event'
@@ -24,6 +24,7 @@ export class EventsComponent implements OnInit, OnDestroy {
   answerModel: AnswerModel
   comment    : string
   table      : string[][]
+  usersMap   : any
 
   constructor(private route: ActivatedRoute,
               private usersRepository: UsersRepositoryService,
@@ -34,7 +35,13 @@ export class EventsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const eventId$  = new Subject<string>()
     const event$    = new Subject<Event>()
-    const usersMap$ = new Subject<any>()
+    const usersMap$ = new ReplaySubject<any>()
+
+    Observable.zip(event$, usersMap$).subscribe(values => {
+      const [event, usersMap] = values
+      this.usersMap = usersMap
+      this.table    = event.getAnsweredTable(usersMap)
+    })
 
     eventId$.subscribe(eventId => {
       this.subscriptions.push(
@@ -43,6 +50,9 @@ export class EventsComponent implements OnInit, OnDestroy {
           .subscribe(event => {
             this.event = event
             event$.next(this.event)
+            if (this.usersMap) {
+              usersMap$.next(this.usersMap)
+            }
             this.initAnswer(this.my, this.event)
           })
       )
@@ -75,12 +85,6 @@ export class EventsComponent implements OnInit, OnDestroy {
           usersMap$.next(usersMap)
         })
     )
-
-    Observable.zip(event$, usersMap$).subscribe(values => {
-      const [event, usersMap] = values
-      this.table = event.getAnsweredTable(usersMap)
-      console.log(this.table);
-    })
   }
 
   ngOnDestroy() {
@@ -112,17 +116,19 @@ export class EventsComponent implements OnInit, OnDestroy {
 
   private initAnswer(user: User, event: Event) {
     if (!user || !this.event.answeredUsers.find(u => u === user.uid)) {
-      event.candidates.forEach(v => this.setAnswer(v.id, 0))
+      event.candidates.forEach(v => this.setAnswer(v.candidateId, 0))
       return
     }
     const myAnswer = event.answers[user.uid].answer
     event.candidates.forEach(v => {
-      const target = myAnswer.find(answer => answer.candidateId === v.id)
-      this.setAnswer(v.id, target.chosen)
+      const target = myAnswer.find(answer => answer.candidateId === v.candidateId)
+      this.setAnswer(v.candidateId, target.chosen)
     })
   }
 
   private setAnswer(candidateId: string, value: number) {
+    console.assert(candidateId !== undefined, 'undefined was given to candidateId');
+
     this.answerModel[candidateId] = value
   }
 

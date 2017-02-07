@@ -30,9 +30,21 @@
       <table class="ui celled table">
         <tr class="center aligned" *ngFor="let candidate of event?.candidates">
           <td>{{candidate.contents}}</td>
-          <td class="ch-answer-cell" [class.selected]="answerModel[candidate.id] === 2" (click)="onClickO(candidate.id)">○</td>
-          <td class="ch-answer-cell" [class.selected]="answerModel[candidate.id] === 1" (click)="onClickA(candidate.id)">△</td>
-          <td class="ch-answer-cell" [class.selected]="answerModel[candidate.id] === 0" (click)="onClickX(candidate.id)">✕</td>
+          <td
+            class="ch-answer-cell"
+            [class.selected]="answerModel[candidate.candidateId] === 2"
+            (click)="onClickO(candidate.candidateId)"
+          >○</td>
+          <td
+            class="ch-answer-cell"
+            [class.selected]="answerModel[candidate.candidateId] === 1"
+            (click)="onClickA(candidate.candidateId)"
+          >△</td>
+          <td
+            class="ch-answer-cell"
+            [class.selected]="answerModel[candidate.candidateId] === 0"
+            (click)="onClickX(candidate.candidateId)"
+          >✕</td>
         </tr>
       </table>
     </ui-column>

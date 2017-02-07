@@ -4,10 +4,6 @@ import {AngularFire} from 'angularfire2'
 
 import {uuidGen} from '../../utils/uuid-gen'
 import {EVENTS_PATH} from './event-const'
-import {
-  EventResponseV02, EventResponseV03,
-  EventResponseV04
-} from './event-response'
 import {AnswerDraft} from '../answer/answer-draft';
 
 export interface EventDraft {
@@ -24,9 +20,9 @@ const LATEST_VERSION = 4
 const formatCandidates = (draft: EventDraft) => {
   return draft.candidates
     .split('\n')
-    .reduce((output, v, idx) => {
+    .reduce((output, contents, idx) => {
       output[uuidGen()] = {
-        value    : v,
+        contents,
         sortOrder: idx
       }
       return output
@@ -53,7 +49,7 @@ export class EventWriterService {
         name      : draft.name,
         group     : draft.group,
         due       : draft.due.getTime(),
-        comment   : draft.comment,
+        comment   : draft.comment || '',
         candidates: formatCandidates(draft),
         answers   : {},
         created   : firebase.database.ServerValue.TIMESTAMP,
@@ -73,36 +69,6 @@ export class EventWriterService {
       .update({
         answers : draft.answers,
         modified: firebase.database.ServerValue.TIMESTAMP,
-      })
-  }
-
-  convert1to2(event: EventResponseV02) {
-    this.af.database
-      .object(eventPath(event.$key))
-      .update({
-        candidates: event.candidates,
-        modified  : firebase.database.ServerValue.TIMESTAMP,
-        version   : 2,
-      })
-  }
-
-  convert2to3(event: EventResponseV03) {
-    this.af.database
-      .object(eventPath(event.$key))
-      .update({
-        answers : event.answers,
-        modified: firebase.database.ServerValue.TIMESTAMP,
-        version : 3,
-      })
-  }
-
-  convert3to4(event: EventResponseV04) {
-    this.af.database
-      .object(eventPath(event.$key))
-      .update({
-        answers : event.answers,
-        modified: firebase.database.ServerValue.TIMESTAMP,
-        version : 4,
       })
   }
 
