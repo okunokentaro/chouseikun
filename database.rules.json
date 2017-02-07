@@ -1,0 +1,26 @@
+{
+  "rules": {
+    "users": {
+      ".read": "auth != null",
+      "$uid": {
+        ".read": "auth.uid === $uid",
+        ".write": "auth.uid === $uid"
+      }
+    },
+    "groups": {
+      "$groupId": {
+        ".read": "root.child('users/' + auth.uid + '/groups/' + $groupId).exists()",
+        ".write": "false"
+      }
+    },
+    "events": {
+      ".read": "auth != null",
+      ".write": "auth != null",
+      ".indexOn": "group",
+      "$eventId": {
+        ".read": "root.child('users/' + auth.uid + '/groups/' + data.child('group').val()).exists()",
+        ".write": "data.child('creator').val() === auth.uid"
+      }
+    }
+  }
+}

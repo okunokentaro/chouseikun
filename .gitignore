@@ -41,6 +41,6 @@ Thumbs.db
 
 # Semantic UI
 /semantic
-/src/semantic.css
-/src/semantic.js
-/src/themes
+/src/semantic
+
+/public
