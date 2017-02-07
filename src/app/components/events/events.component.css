@@ -1,3 +1,7 @@
+:host {
+  display: block;
+}
+
 .ch-answer-cell {
   cursor: pointer;
   font-size: 20px;
