@@ -4,7 +4,10 @@ import {AngularFire} from 'angularfire2'
 
 import {uuidGen} from '../../utils/uuid-gen'
 import {EVENTS_PATH} from './event-const'
-import {EventResponseV02, EventResponseV03} from './event-response'
+import {
+  EventResponseV02, EventResponseV03,
+  EventResponseV04
+} from './event-response'
 import {AnswerDraft} from '../answer/answer-draft';
 
 export interface EventDraft {
@@ -16,7 +19,7 @@ export interface EventDraft {
   name      : string
 }
 
-const LATEST_VERSION = 3
+const LATEST_VERSION = 4
 
 const formatCandidates = (draft: EventDraft) => {
   return draft.candidates
@@ -90,6 +93,16 @@ export class EventWriterService {
         answers : event.answers,
         modified: firebase.database.ServerValue.TIMESTAMP,
         version : 3,
+      })
+  }
+
+  convert3to4(event: EventResponseV04) {
+    this.af.database
+      .object(eventPath(event.$key))
+      .update({
+        answers : event.answers,
+        modified: firebase.database.ServerValue.TIMESTAMP,
+        version : 4,
       })
   }
 

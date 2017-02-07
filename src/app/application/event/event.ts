@@ -1,11 +1,11 @@
 interface Candidate {
-  id   : string
-  value: string
+  id      : string
+  contents: string
 }
 
 export interface Answer {
   candidateId: string,
-  value      : number
+  chosen     : number
 }
 
 export interface Answers {
@@ -45,26 +45,28 @@ export class Event {
   get answers(): Answers        { return this.item.answers }
   get answeredUsers(): string[] { return Object.keys(this.answers) }
 
-  getAnsweredTable(): string[][] {
-    const ids    = this.candidates.map(v => v.id)
-    const values = this.candidates.map(v => v.value)
-    values.unshift('')
+  getAnsweredTable(usersMap: any): string[][] {
+    const ids           = this.candidates.map(v => v.id)
+    const contentsArray = this.candidates.map(v => v.contents)
+    contentsArray.unshift('')
 
     const users          = this.answeredUsers
     const userAnswersMap = users.reduce((output, key) => {
       output[key] = ids.map(id => {
         const answer = this.answers[key].answer
         const target = answer.find(a => a.candidateId === id)
-        return target.value
+        return target.chosen
       })
       return output
     }, {})
 
-    return values.map((v, i) => {
+    return contentsArray.map((v, i) => {
       if (i === 0) {
-        return [v, ...users]
+        const userNames = users.map(u => usersMap[u])
+        return [v, ...userNames]
       }
 
+      console.log(userAnswersMap);
       return [v, ...users.map(user => userAnswersMap[user][i - 1])]
     })
   }

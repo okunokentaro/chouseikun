@@ -1,7 +1,7 @@
 import {User} from '../user/user'
 import {Answer, Answers, Event} from '../event/event'
 
-export type AnswerModel = {[candidateId: string]: number}
+export type AnswerModel = {[candidateId: string]: /* chosen */number}
 
 export class AnswerDraft {
 
@@ -21,7 +21,7 @@ export class AnswerDraft {
       .map(candidateId => {
         return {
           candidateId,
-          value: this.answerModel[candidateId]
+          chosen: this.answerModel[candidateId]
         }
       })
   }

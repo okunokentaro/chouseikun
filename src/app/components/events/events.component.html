@@ -29,7 +29,7 @@
     <ui-column [n]="16">
       <table class="ui celled table">
         <tr class="center aligned" *ngFor="let candidate of event?.candidates">
-          <td>{{candidate.value}}</td>
+          <td>{{candidate.contents}}</td>
           <td class="ch-answer-cell" [class.selected]="answerModel[candidate.id] === 2" (click)="onClickO(candidate.id)">○</td>
           <td class="ch-answer-cell" [class.selected]="answerModel[candidate.id] === 1" (click)="onClickA(candidate.id)">△</td>
           <td class="ch-answer-cell" [class.selected]="answerModel[candidate.id] === 0" (click)="onClickX(candidate.id)">✕</td>
